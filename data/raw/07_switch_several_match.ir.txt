@@ -1,0 +1,30 @@
+main() {
+    .BB0:
+    $0 = 2
+    switch ($0) {
+        0 : .BB2
+        1 : .BB4
+        2 : .BB5
+        3 : .BB5
+        default : .BB1
+    }
+
+    .BB1:
+    #return = $0
+    j .main_ret
+
+    .BB2:
+    $0 = 10
+    j .BB1
+
+    .BB4:
+    j .BB5
+
+    .BB5:
+    $0 = 20
+    j .BB1
+
+    .main_ret:
+    ret
+
+}

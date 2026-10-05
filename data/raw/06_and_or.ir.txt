@@ -1,0 +1,63 @@
+main() {
+    .BB0:
+    $0 = 1
+    $1 = 2
+    $2 = 3
+    j .AND3
+
+    .IFELSE2:
+    #11 = ($0, $1)
+    j .OR12 if #11 else .OR11
+
+    .AND3:
+    #7 = 2
+    #8 = ($1, #7)
+    j .AND4 if #8 else .AND5
+
+    .AND4:
+    $6 = 1
+    j .ANDFOLLOW6
+
+    .AND5:
+    $6 = 0
+    j .ANDFOLLOW6
+
+    .ANDFOLLOW6:
+    j .BB7 if $6 else .IFELSE2
+
+    .BB7:
+    #9 = 1000
+    #10 = ($2, #9)
+    $2 = #10
+    j .IFELSE2
+
+    .IFELSE10:
+    #return = $2
+    j .main_ret
+
+    .OR11:
+    #13 = 1
+    #14 = ($0, #13)
+    j .OR12 if #14 else .OR13
+
+    .OR12:
+    $12 = 1
+    j .OR14
+
+    .OR13:
+    $12 = 0
+    j .OR14
+
+    .OR14:
+    j .BB15 if $12 else .IFELSE10
+
+    .BB15:
+    #15 = 1000
+    #16 = ($2, #15)
+    $2 = #16
+    j .IFELSE10
+
+    .main_ret:
+    ret
+
+}

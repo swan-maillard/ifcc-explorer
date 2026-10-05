@@ -1,0 +1,14 @@
+{
+  "gcc": {
+    "exit": 5,
+    "stdout": ""
+  },
+  "x86": {
+    "exit": 5,
+    "stdout": ""
+  },
+  "rv64": {
+    "exit": 5,
+    "stdout": ""
+  }
+}

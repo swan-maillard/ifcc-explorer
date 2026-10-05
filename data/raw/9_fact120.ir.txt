@@ -1,0 +1,81 @@
+factorial($0, ) {
+    .BB0:
+    #1 = 1
+    #2 = ($0, #1)
+    j .IFTHEN1 if #2 else .IFELSE2
+
+    .IFTHEN1:
+    #return = 1
+    j .factorial_ret
+
+    .IFELSE2:
+    #5 = 1
+    #6 = ($0, #5)
+    #4 = factorial(#6, )
+    #7 = ($0, #4)
+    #return = #7
+    j .factorial_ret
+
+    .factorial_ret:
+    ret
+
+}
+main() {
+    .BB4:
+    $1 = 4
+    #9 = factorial($1, )
+    $2 = #9
+    j .WHCOND5
+
+    .WHCOND5:
+    #10 = 2
+    #11 = ($2, #10)
+    j .AND8 if #11 else .AND10
+
+    .WHELSE7:
+    switch ($2) {
+        2 : .BB17
+        120 : .BB17
+        default : .BB14
+    }
+
+    .AND8:
+    #13 = 120
+    #14 = ($2, #13)
+    j .AND9 if #14 else .AND10
+
+    .AND9:
+    $12 = 1
+    j .ANDFOLLOW11
+
+    .AND10:
+    $12 = 0
+    j .ANDFOLLOW11
+
+    .ANDFOLLOW11:
+    j .BB12 if $12 else .WHELSE7
+
+    .BB12:
+    $1 = ($1)
+    #15 = factorial($1, )
+    $2 = #15
+    j .WHCOND5
+
+    .BB14:
+    #16 = 2
+    #17 = ($1, #16)
+    $2 = #17
+    j .BB15
+
+    .BB15:
+    #return = $2
+    j .main_ret
+
+    .BB17:
+    $2 = $1
+    j .BB15
+
+    .main_ret:
+    ret
+
+}

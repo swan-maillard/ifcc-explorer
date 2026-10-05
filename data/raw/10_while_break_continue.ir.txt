@@ -1,0 +1,28 @@
+main() {
+    .BB0:
+    $0 = 3
+    j .WHTHEN2
+
+    .WHTHEN2:
+    j .BB4
+
+    .WHELSE3:
+    #return = $0
+    j .main_ret
+
+    .BB4:
+    #3 = 1
+    #4 = ($0, #3)
+    $0 = #4
+    j .BB9 if $0 else .IFFOLLOW8
+
+    .IFFOLLOW8:
+    j .BB4
+
+    .BB9:
+    j .WHELSE3
+
+    .main_ret:
+    ret
+
+}

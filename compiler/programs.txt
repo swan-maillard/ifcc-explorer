@@ -1,0 +1,9 @@
+switch/01_switch_break.c
+switch/02_switch_no_break.c
+switch/07_switch_several_match.c
+switch/09_switch_expression.c
+loop/06_while_continue.c
+loop/10_while_break_continue.c
+return/08_while_if_return.c
+if_else/06_and_or.c
+functions/9_fact120.c

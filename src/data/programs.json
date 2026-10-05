@@ -1,0 +1,6130 @@
+[
+ {
+  "id": "01_switch_break",
+  "path": "tests/testfiles/switch/01_switch_break.c",
+  "source": "int main() {\n    int a = 1;\n    switch (a) {\n        case 0:\n            a = 10;\n            break;\n        case 1:\n            a = 20;\n            break;\n    }\n\n    return a;\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 1\n    switch ($0) {\n        0 : .BB2\n        1 : .BB3\n        default : .BB1\n    }\n\n    .BB1:\n    #return = $0\n    j .main_ret\n\n    .BB2:\n    $0 = 10\n    j .BB1\n\n    .BB3:\n    $0 = 20\n    j .BB1\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 20,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 1,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "switch",
+       "test": "$0",
+       "cases": [
+        {
+         "value": "0",
+         "to": ".BB2"
+        },
+        {
+         "value": "1",
+         "to": ".BB3"
+        }
+       ],
+       "default": ".BB1",
+       "slots": {
+        "$0": 8
+       },
+       "line": 3
+      }
+     },
+     {
+      "name": ".BB1",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$0",
+        "slots": {
+         "#return": 4,
+         "$0": 8
+        },
+        "line": 12
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 12
+      }
+     },
+     {
+      "name": ".BB2",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 10,
+        "slots": {
+         "$0": 8
+        },
+        "line": 5
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB1",
+       "slots": {},
+       "line": 6
+      }
+     },
+     {
+      "name": ".BB3",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 20,
+        "slots": {
+         "$0": 8
+        },
+        "line": 8
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB1",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 32\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 1\n    cmp DWORD PTR -8[rbp], 0\n    je .BB2\n    cmp DWORD PTR -8[rbp], 1\n    je .BB3\n    jmp .BB1\n.BB1:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB2:\n    mov DWORD PTR -8[rbp], 10\n    jmp .BB1\n.BB3:\n    mov DWORD PTR -8[rbp], 20\n    jmp .BB1\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 9,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 15,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 17,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 14,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "instr",
+      "index": 0,
+      "from": 19,
+      "to": 20
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "next",
+      "index": -1,
+      "from": 20,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "block",
+      "index": -1,
+      "from": 18,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "instr",
+      "index": 0,
+      "from": 22,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "next",
+      "index": -1,
+      "from": 23,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "block",
+      "index": -1,
+      "from": 21,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 25,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 24,
+      "to": 29
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -48\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -48\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 1\n    sw a5, -8(s0)\n    li a6, 0\n    lw a5, -8(s0)\n    beq a5, a6, .BB2\n    li a6, 1\n    lw a5, -8(s0)\n    beq a5, a6, .BB3\n.BB1:\n    lw a5, -8(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB2:\n    li a5, 10\n    sw a5, -8(s0)\n    j .BB1\n.BB3:\n    li a5, 20\n    sw a5, -8(s0)\n    j .BB1\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 48\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 11,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 18,
+      "to": 20
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 20,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 17,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "instr",
+      "index": 0,
+      "from": 22,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "next",
+      "index": -1,
+      "from": 24,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "block",
+      "index": -1,
+      "from": 21,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "instr",
+      "index": 0,
+      "from": 26,
+      "to": 28
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "next",
+      "index": -1,
+      "from": 28,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "block",
+      "index": -1,
+      "from": 25,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 30,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 29,
+      "to": 35
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 20,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "02_switch_no_break",
+  "path": "tests/testfiles/switch/02_switch_no_break.c",
+  "source": "int main() {\n    int a = 0;\n    switch (a) {\n        case 0:\n            a = 10;\n        case 1:\n            a = 20;\n    }\n\n    return a;\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 0\n    switch ($0) {\n        0 : .BB2\n        1 : .BB3\n        default : .BB1\n    }\n\n    .BB1:\n    #return = $0\n    j .main_ret\n\n    .BB2:\n    $0 = 10\n    j .BB3\n\n    .BB3:\n    $0 = 20\n    j .BB1\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 20,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 0,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "switch",
+       "test": "$0",
+       "cases": [
+        {
+         "value": "0",
+         "to": ".BB2"
+        },
+        {
+         "value": "1",
+         "to": ".BB3"
+        }
+       ],
+       "default": ".BB1",
+       "slots": {
+        "$0": 8
+       },
+       "line": 3
+      }
+     },
+     {
+      "name": ".BB1",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$0",
+        "slots": {
+         "#return": 4,
+         "$0": 8
+        },
+        "line": 10
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 10
+      }
+     },
+     {
+      "name": ".BB2",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 10,
+        "slots": {
+         "$0": 8
+        },
+        "line": 5
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB3",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".BB3",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 20,
+        "slots": {
+         "$0": 8
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB1",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 32\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 0\n    cmp DWORD PTR -8[rbp], 0\n    je .BB2\n    cmp DWORD PTR -8[rbp], 1\n    je .BB3\n    jmp .BB1\n.BB1:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB2:\n    mov DWORD PTR -8[rbp], 10\n    jmp .BB3\n.BB3:\n    mov DWORD PTR -8[rbp], 20\n    jmp .BB1\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 9,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 15,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 17,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 14,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "instr",
+      "index": 0,
+      "from": 19,
+      "to": 20
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "next",
+      "index": -1,
+      "from": 20,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "block",
+      "index": -1,
+      "from": 18,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "instr",
+      "index": 0,
+      "from": 22,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "next",
+      "index": -1,
+      "from": 23,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "block",
+      "index": -1,
+      "from": 21,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 25,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 24,
+      "to": 29
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -48\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -48\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 0\n    sw a5, -8(s0)\n    li a6, 0\n    lw a5, -8(s0)\n    beq a5, a6, .BB2\n    li a6, 1\n    lw a5, -8(s0)\n    beq a5, a6, .BB3\n.BB1:\n    lw a5, -8(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB2:\n    li a5, 10\n    sw a5, -8(s0)\n    j .BB3\n.BB3:\n    li a5, 20\n    sw a5, -8(s0)\n    j .BB1\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 48\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 11,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 18,
+      "to": 20
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 20,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 17,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "instr",
+      "index": 0,
+      "from": 22,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "next",
+      "index": -1,
+      "from": 24,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "block",
+      "index": -1,
+      "from": 21,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "instr",
+      "index": 0,
+      "from": 26,
+      "to": 28
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "next",
+      "index": -1,
+      "from": 28,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "block",
+      "index": -1,
+      "from": 25,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 30,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 29,
+      "to": 35
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 20,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "07_switch_several_match",
+  "path": "tests/testfiles/switch/07_switch_several_match.c",
+  "source": "int main() {\n    int a = 2;\n    switch (a) {\n        case 0:\n            a = 10;\n            break;\n        case 1:\n        case 2:\n        case 3:\n            a = 20;\n            break;\n    }\n\n    return a;\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 2\n    switch ($0) {\n        0 : .BB2\n        1 : .BB4\n        2 : .BB5\n        3 : .BB5\n        default : .BB1\n    }\n\n    .BB1:\n    #return = $0\n    j .main_ret\n\n    .BB2:\n    $0 = 10\n    j .BB1\n\n    .BB4:\n    j .BB5\n\n    .BB5:\n    $0 = 20\n    j .BB1\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 20,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 2,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "switch",
+       "test": "$0",
+       "cases": [
+        {
+         "value": "0",
+         "to": ".BB2"
+        },
+        {
+         "value": "1",
+         "to": ".BB4"
+        },
+        {
+         "value": "2",
+         "to": ".BB5"
+        },
+        {
+         "value": "3",
+         "to": ".BB5"
+        }
+       ],
+       "default": ".BB1",
+       "slots": {
+        "$0": 8
+       },
+       "line": 3
+      }
+     },
+     {
+      "name": ".BB1",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$0",
+        "slots": {
+         "#return": 4,
+         "$0": 8
+        },
+        "line": 14
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 14
+      }
+     },
+     {
+      "name": ".BB2",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 10,
+        "slots": {
+         "$0": 8
+        },
+        "line": 5
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB1",
+       "slots": {},
+       "line": 6
+      }
+     },
+     {
+      "name": ".BB4",
+      "instrs": [],
+      "next": {
+       "op": "jump",
+       "to": ".BB5",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".BB5",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 20,
+        "slots": {
+         "$0": 8
+        },
+        "line": 10
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB1",
+       "slots": {},
+       "line": 11
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 32\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 2\n    cmp DWORD PTR -8[rbp], 0\n    je .BB2\n    cmp DWORD PTR -8[rbp], 1\n    je .BB4\n    cmp DWORD PTR -8[rbp], 2\n    je .BB5\n    cmp DWORD PTR -8[rbp], 3\n    je .BB5\n    jmp .BB1\n.BB1:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB2:\n    mov DWORD PTR -8[rbp], 10\n    jmp .BB1\n.BB4:\n    jmp .BB5\n.BB5:\n    mov DWORD PTR -8[rbp], 20\n    jmp .BB1\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 9,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 19,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 21,
+      "to": 22
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 18,
+      "to": 22
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "instr",
+      "index": 0,
+      "from": 23,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "next",
+      "index": -1,
+      "from": 24,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "block",
+      "index": -1,
+      "from": 22,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 26,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 25,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "instr",
+      "index": 0,
+      "from": 28,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "next",
+      "index": -1,
+      "from": 29,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "block",
+      "index": -1,
+      "from": 27,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 31,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 30,
+      "to": 35
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -48\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -48\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 2\n    sw a5, -8(s0)\n    li a6, 0\n    lw a5, -8(s0)\n    beq a5, a6, .BB2\n    li a6, 1\n    lw a5, -8(s0)\n    beq a5, a6, .BB4\n    li a6, 2\n    lw a5, -8(s0)\n    beq a5, a6, .BB5\n    li a6, 3\n    lw a5, -8(s0)\n    beq a5, a6, .BB5\n.BB1:\n    lw a5, -8(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB2:\n    li a5, 10\n    sw a5, -8(s0)\n    j .BB1\n.BB4:\n    j .BB5\n.BB5:\n    li a5, 20\n    sw a5, -8(s0)\n    j .BB1\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 48\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 11,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 24,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 26,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 23,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "instr",
+      "index": 0,
+      "from": 28,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "next",
+      "index": -1,
+      "from": 30,
+      "to": 31
+     },
+     {
+      "func": "main",
+      "block": ".BB2",
+      "kind": "block",
+      "index": -1,
+      "from": 27,
+      "to": 31
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 32,
+      "to": 33
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 31,
+      "to": 33
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "instr",
+      "index": 0,
+      "from": 34,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "next",
+      "index": -1,
+      "from": 36,
+      "to": 37
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "block",
+      "index": -1,
+      "from": 33,
+      "to": 37
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 38,
+      "to": 43
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 37,
+      "to": 43
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 20,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "09_switch_expression",
+  "path": "tests/testfiles/switch/09_switch_expression.c",
+  "source": "int main() {\n\tint a = 2;\n\tswitch(a*3) {\n\t\tcase 8:\n\t\t\treturn 8;\n\t\tcase 2:\n\t\t\treturn 2;\n\t\tcase 7:\n\t\t\treturn 7;\n\t\tcase 6:\n\t\t\treturn 20;\n\t\tdefault:\n\t\t\treturn a+1;\n\t}\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 2\n    #3 = 6\n    switch (#3) {\n        8 : .BB3\n        2 : .BB4\n        7 : .BB5\n        6 : .BB6\n        default : .BB1\n    }\n\n    .BB1:\n    #8 = 1\n    #9 = ($0, #8)\n    #return = #9\n    j .main_ret\n\n    .BB3:\n    #return = 8\n    j .main_ret\n\n    .BB4:\n    #return = 2\n    j .main_ret\n\n    .BB5:\n    #return = 7\n    j .main_ret\n\n    .BB6:\n    #return = 20\n    j .main_ret\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 44,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 2,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       },
+       {
+        "op": "const",
+        "to": "#3",
+        "value": 6,
+        "slots": {
+         "#3": 20
+        },
+        "line": 3
+       }
+      ],
+      "next": {
+       "op": "switch",
+       "test": "#3",
+       "cases": [
+        {
+         "value": "8",
+         "to": ".BB3"
+        },
+        {
+         "value": "2",
+         "to": ".BB4"
+        },
+        {
+         "value": "7",
+         "to": ".BB5"
+        },
+        {
+         "value": "6",
+         "to": ".BB6"
+        }
+       ],
+       "default": ".BB1",
+       "slots": {
+        "#3": 20
+       },
+       "line": 3
+      }
+     },
+     {
+      "name": ".BB1",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#8",
+        "value": 1,
+        "slots": {
+         "#8": 40
+        },
+        "line": 13
+       },
+       {
+        "op": "bin",
+        "kind": "ADD",
+        "to": "#9",
+        "left": "$0",
+        "right": "#8",
+        "slots": {
+         "#9": 44,
+         "$0": 8,
+         "#8": 40
+        },
+        "line": 13
+       },
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "#9",
+        "slots": {
+         "#return": 4,
+         "#9": 44
+        },
+        "line": 13
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 13
+      }
+     },
+     {
+      "name": ".BB3",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#return",
+        "value": 8,
+        "slots": {
+         "#return": 4
+        },
+        "line": 5
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 5
+      }
+     },
+     {
+      "name": ".BB4",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#return",
+        "value": 2,
+        "slots": {
+         "#return": 4
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 7
+      }
+     },
+     {
+      "name": ".BB5",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#return",
+        "value": 7,
+        "slots": {
+         "#return": 4
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".BB6",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#return",
+        "value": 20,
+        "slots": {
+         "#return": 4
+        },
+        "line": 11
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 11
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 48\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 2\n    mov DWORD PTR -20[rbp], 6\n    cmp DWORD PTR -20[rbp], 8\n    je .BB3\n    cmp DWORD PTR -20[rbp], 2\n    je .BB4\n    cmp DWORD PTR -20[rbp], 7\n    je .BB5\n    cmp DWORD PTR -20[rbp], 6\n    je .BB6\n    jmp .BB1\n.BB1:\n    mov DWORD PTR -40[rbp], 1\n    mov eax, DWORD PTR -8[rbp]\n    add eax, DWORD PTR -40[rbp]\n    mov DWORD PTR -44[rbp], eax\n    mov eax, DWORD PTR -44[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB3:\n    mov DWORD PTR -4[rbp], 8\n    jmp .main_ret\n.BB4:\n    mov DWORD PTR -4[rbp], 2\n    jmp .main_ret\n.BB5:\n    mov DWORD PTR -4[rbp], 7\n    jmp .main_ret\n.BB6:\n    mov DWORD PTR -4[rbp], 20\n    jmp .main_ret\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 9,
+      "to": 10
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 10,
+      "to": 19
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 19
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 20,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 1,
+      "from": 21,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 2,
+      "from": 24,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 26,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 19,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "instr",
+      "index": 0,
+      "from": 28,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "next",
+      "index": -1,
+      "from": 29,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "block",
+      "index": -1,
+      "from": 27,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 31,
+      "to": 32
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 32,
+      "to": 33
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 30,
+      "to": 33
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "instr",
+      "index": 0,
+      "from": 34,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "next",
+      "index": -1,
+      "from": 35,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "block",
+      "index": -1,
+      "from": 33,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".BB6",
+      "kind": "instr",
+      "index": 0,
+      "from": 37,
+      "to": 38
+     },
+     {
+      "func": "main",
+      "block": ".BB6",
+      "kind": "next",
+      "index": -1,
+      "from": 38,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".BB6",
+      "kind": "block",
+      "index": -1,
+      "from": 36,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 40,
+      "to": 44
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 39,
+      "to": 44
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -64\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -64\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 2\n    sw a5, -8(s0)\n    li a5, 6\n    sw a5, -20(s0)\n    li a6, 8\n    lw a5, -20(s0)\n    beq a5, a6, .BB3\n    li a6, 2\n    lw a5, -20(s0)\n    beq a5, a6, .BB4\n    li a6, 7\n    lw a5, -20(s0)\n    beq a5, a6, .BB5\n    li a6, 6\n    lw a5, -20(s0)\n    beq a5, a6, .BB6\n.BB1:\n    li a5, 1\n    sw a5, -40(s0)\n    lw a5, -8(s0)\n    lw a6, -40(s0)\n    addw a5, a5, a6\n    sw a5, -44(s0)\n    lw a5, -44(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB3:\n    li a5, 8\n    sw a5, -4(s0)\n    j .main_ret\n.BB4:\n    li a5, 2\n    sw a5, -4(s0)\n    j .main_ret\n.BB5:\n    li a5, 7\n    sw a5, -4(s0)\n    j .main_ret\n.BB6:\n    li a5, 20\n    sw a5, -4(s0)\n    j .main_ret\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 64\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 11,
+      "to": 13
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 13,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 0,
+      "from": 26,
+      "to": 28
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 1,
+      "from": 28,
+      "to": 32
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "instr",
+      "index": 2,
+      "from": 32,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "next",
+      "index": -1,
+      "from": 34,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".BB1",
+      "kind": "block",
+      "index": -1,
+      "from": 25,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "instr",
+      "index": 0,
+      "from": 36,
+      "to": 38
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "next",
+      "index": -1,
+      "from": 38,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".BB3",
+      "kind": "block",
+      "index": -1,
+      "from": 35,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 40,
+      "to": 42
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 42,
+      "to": 43
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 39,
+      "to": 43
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "instr",
+      "index": 0,
+      "from": 44,
+      "to": 46
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "next",
+      "index": -1,
+      "from": 46,
+      "to": 47
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "block",
+      "index": -1,
+      "from": 43,
+      "to": 47
+     },
+     {
+      "func": "main",
+      "block": ".BB6",
+      "kind": "instr",
+      "index": 0,
+      "from": 48,
+      "to": 50
+     },
+     {
+      "func": "main",
+      "block": ".BB6",
+      "kind": "next",
+      "index": -1,
+      "from": 50,
+      "to": 51
+     },
+     {
+      "func": "main",
+      "block": ".BB6",
+      "kind": "block",
+      "index": -1,
+      "from": 47,
+      "to": 51
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 52,
+      "to": 57
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 51,
+      "to": 57
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 20,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 20,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "06_while_continue",
+  "path": "tests/testfiles/loop/06_while_continue.c",
+  "source": "int main() {\n    int a = 2, b = 0;\n    while (a) {\n        a = a-1;\n        continue;\n        b = b + 2;\n    }\n\n    return a + b;\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 2\n    $1 = 0\n    j .WHCOND1\n\n    .WHCOND1:\n    j .BB4 if $0 else .WHELSE3\n\n    .WHELSE3:\n    #5 = ($0, $1)\n    #return = #5\n    j .main_ret\n\n    .BB4:\n    #3 = 1\n    #4 = ($0, #3)\n    $0 = #4\n    j .WHCOND1\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 32,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     },
+     {
+      "ir": "$1",
+      "name": "b",
+      "line": 2,
+      "slot": 16
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 2,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       },
+       {
+        "op": "const",
+        "to": "$1",
+        "value": 0,
+        "slots": {
+         "$1": 16
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".WHCOND1",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".WHCOND1",
+      "instrs": [],
+      "next": {
+       "op": "branch",
+       "cond": "$0",
+       "then": ".BB4",
+       "else": ".WHELSE3",
+       "slots": {
+        "$0": 8
+       },
+       "line": 3
+      }
+     },
+     {
+      "name": ".WHELSE3",
+      "instrs": [
+       {
+        "op": "bin",
+        "kind": "ADD",
+        "to": "#5",
+        "left": "$0",
+        "right": "$1",
+        "slots": {
+         "#5": 24,
+         "$0": 8,
+         "$1": 16
+        },
+        "line": 9
+       },
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "#5",
+        "slots": {
+         "#return": 4,
+         "#5": 24
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".BB4",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#3",
+        "value": 1,
+        "slots": {
+         "#3": 28
+        },
+        "line": 4
+       },
+       {
+        "op": "bin",
+        "kind": "SUB",
+        "to": "#4",
+        "left": "$0",
+        "right": "#3",
+        "slots": {
+         "#4": 32,
+         "$0": 8,
+         "#3": 28
+        },
+        "line": 4
+       },
+       {
+        "op": "copy",
+        "to": "$0",
+        "from": "#4",
+        "slots": {
+         "$0": 8,
+         "#4": 32
+        },
+        "line": 4
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".WHCOND1",
+       "slots": {},
+       "line": 5
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 32\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 2\n    mov DWORD PTR -16[rbp], 0\n    jmp .WHCOND1\n.WHCOND1:\n    cmp DWORD PTR -8[rbp], 0\n    je .WHELSE3\n    jmp .BB4\n.WHELSE3:\n    mov eax, DWORD PTR -8[rbp]\n    add eax, DWORD PTR -16[rbp]\n    mov DWORD PTR -24[rbp], eax\n    mov eax, DWORD PTR -24[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB4:\n    mov DWORD PTR -28[rbp], 1\n    mov eax, DWORD PTR -8[rbp]\n    sub eax, DWORD PTR -28[rbp]\n    mov DWORD PTR -32[rbp], eax\n    mov eax, DWORD PTR -32[rbp]\n    mov DWORD PTR -8[rbp], eax\n    jmp .WHCOND1\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 9,
+      "to": 10
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 10,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "next",
+      "index": -1,
+      "from": 12,
+      "to": 15
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "block",
+      "index": -1,
+      "from": 11,
+      "to": 15
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 0,
+      "from": 16,
+      "to": 19
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 1,
+      "from": 19,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "next",
+      "index": -1,
+      "from": 21,
+      "to": 22
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "block",
+      "index": -1,
+      "from": 15,
+      "to": 22
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 23,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 24,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 27,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 29,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 22,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 31,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 30,
+      "to": 35
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -48\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -48\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 2\n    sw a5, -8(s0)\n    li a5, 0\n    sw a5, -16(s0)\n    j .WHCOND1\n.WHCOND1:\n    lw a5, -8(s0)\n    beq a5, zero, .WHELSE3\n    j .BB4\n.WHELSE3:\n    lw a5, -8(s0)\n    lw a6, -16(s0)\n    addw a5, a5, a6\n    sw a5, -24(s0)\n    lw a5, -24(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB4:\n    li a5, 1\n    sw a5, -28(s0)\n    lw a5, -8(s0)\n    lw a6, -28(s0)\n    subw a5, a5, a6\n    sw a5, -32(s0)\n    lw a5, -32(s0)\n    sw a5, -8(s0)\n    j .WHCOND1\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 48\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 11,
+      "to": 13
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 13,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "next",
+      "index": -1,
+      "from": 15,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "block",
+      "index": -1,
+      "from": 14,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 0,
+      "from": 19,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 1,
+      "from": 23,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "next",
+      "index": -1,
+      "from": 25,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "block",
+      "index": -1,
+      "from": 18,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 27,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 29,
+      "to": 33
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 33,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 35,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 26,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 37,
+      "to": 42
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 36,
+      "to": 42
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 0,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 0,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 0,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "10_while_break_continue",
+  "path": "tests/testfiles/loop/10_while_break_continue.c",
+  "source": "int main() {\n    int a = 3;\n    while(1) {\n        a = a-1;\n        if(a) {\n            break;\n        } else {\n            continue;\n        }\n    }\n    return a;\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 3\n    j .WHTHEN2\n\n    .WHTHEN2:\n    j .BB4\n\n    .WHELSE3:\n    #return = $0\n    j .main_ret\n\n    .BB4:\n    #3 = 1\n    #4 = ($0, #3)\n    $0 = #4\n    j .BB9 if $0 else .IFFOLLOW8\n\n    .IFFOLLOW8:\n    j .BB4\n\n    .BB9:\n    j .WHELSE3\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 24,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 3,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".WHTHEN2",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".WHTHEN2",
+      "instrs": [],
+      "next": {
+       "op": "jump",
+       "to": ".BB4",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".WHELSE3",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$0",
+        "slots": {
+         "#return": 4,
+         "$0": 8
+        },
+        "line": 11
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 11
+      }
+     },
+     {
+      "name": ".BB4",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#3",
+        "value": 1,
+        "slots": {
+         "#3": 20
+        },
+        "line": 4
+       },
+       {
+        "op": "bin",
+        "kind": "SUB",
+        "to": "#4",
+        "left": "$0",
+        "right": "#3",
+        "slots": {
+         "#4": 24,
+         "$0": 8,
+         "#3": 20
+        },
+        "line": 4
+       },
+       {
+        "op": "copy",
+        "to": "$0",
+        "from": "#4",
+        "slots": {
+         "$0": 8,
+         "#4": 24
+        },
+        "line": 4
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "$0",
+       "then": ".BB9",
+       "else": ".IFFOLLOW8",
+       "slots": {
+        "$0": 8
+       },
+       "line": 5
+      }
+     },
+     {
+      "name": ".IFFOLLOW8",
+      "instrs": [],
+      "next": {
+       "op": "jump",
+       "to": ".BB4",
+       "slots": {},
+       "line": 5
+      }
+     },
+     {
+      "name": ".BB9",
+      "instrs": [],
+      "next": {
+       "op": "jump",
+       "to": ".WHELSE3",
+       "slots": {},
+       "line": 6
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 32\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 3\n    jmp .WHTHEN2\n.WHTHEN2:\n    jmp .BB4\n.WHELSE3:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB4:\n    mov DWORD PTR -20[rbp], 1\n    mov eax, DWORD PTR -8[rbp]\n    sub eax, DWORD PTR -20[rbp]\n    mov DWORD PTR -24[rbp], eax\n    mov eax, DWORD PTR -24[rbp]\n    mov DWORD PTR -8[rbp], eax\n    cmp DWORD PTR -8[rbp], 0\n    je .IFFOLLOW8\n    jmp .BB9\n.IFFOLLOW8:\n    jmp .BB4\n.BB9:\n    jmp .WHELSE3\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 9,
+      "to": 10
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 10
+     },
+     {
+      "func": "main",
+      "block": ".WHTHEN2",
+      "kind": "next",
+      "index": -1,
+      "from": 11,
+      "to": 12
+     },
+     {
+      "func": "main",
+      "block": ".WHTHEN2",
+      "kind": "block",
+      "index": -1,
+      "from": 10,
+      "to": 12
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 0,
+      "from": 13,
+      "to": 15
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "next",
+      "index": -1,
+      "from": 15,
+      "to": 16
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "block",
+      "index": -1,
+      "from": 12,
+      "to": 16
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 17,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 18,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 21,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 23,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 16,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".IFFOLLOW8",
+      "kind": "next",
+      "index": -1,
+      "from": 27,
+      "to": 28
+     },
+     {
+      "func": "main",
+      "block": ".IFFOLLOW8",
+      "kind": "block",
+      "index": -1,
+      "from": 26,
+      "to": 28
+     },
+     {
+      "func": "main",
+      "block": ".BB9",
+      "kind": "next",
+      "index": -1,
+      "from": 29,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB9",
+      "kind": "block",
+      "index": -1,
+      "from": 28,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 31,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 30,
+      "to": 35
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -48\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -48\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 3\n    sw a5, -8(s0)\n    j .WHTHEN2\n.WHTHEN2:\n    j .BB4\n.WHELSE3:\n    lw a5, -8(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB4:\n    li a5, 1\n    sw a5, -20(s0)\n    lw a5, -8(s0)\n    lw a6, -20(s0)\n    subw a5, a5, a6\n    sw a5, -24(s0)\n    lw a5, -24(s0)\n    sw a5, -8(s0)\n    lw a5, -8(s0)\n    beq a5, zero, .IFFOLLOW8\n    j .BB9\n.IFFOLLOW8:\n    j .BB4\n.BB9:\n    j .WHELSE3\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 48\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 11,
+      "to": 12
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 12
+     },
+     {
+      "func": "main",
+      "block": ".WHTHEN2",
+      "kind": "next",
+      "index": -1,
+      "from": 13,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".WHTHEN2",
+      "kind": "block",
+      "index": -1,
+      "from": 12,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 0,
+      "from": 15,
+      "to": 17
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "next",
+      "index": -1,
+      "from": 17,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "block",
+      "index": -1,
+      "from": 14,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 19,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 21,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 25,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 27,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 18,
+      "to": 30
+     },
+     {
+      "func": "main",
+      "block": ".IFFOLLOW8",
+      "kind": "next",
+      "index": -1,
+      "from": 31,
+      "to": 32
+     },
+     {
+      "func": "main",
+      "block": ".IFFOLLOW8",
+      "kind": "block",
+      "index": -1,
+      "from": 30,
+      "to": 32
+     },
+     {
+      "func": "main",
+      "block": ".BB9",
+      "kind": "next",
+      "index": -1,
+      "from": 33,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".BB9",
+      "kind": "block",
+      "index": -1,
+      "from": 32,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 35,
+      "to": 40
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 34,
+      "to": 40
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 2,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 2,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 2,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "08_while_if_return",
+  "path": "tests/testfiles/return/08_while_if_return.c",
+  "source": "int main() {\n    int a = 5, b = -4;\n    while(a) {\n        a = a - 1;\n        b = b + a;\n        if (b) return a;\n    }\n\n    return a;\n}\n",
+  "dump": "main() {\n    .BB0:\n    $0 = 5\n    $1 = -4\n    j .WHCOND1\n\n    .WHCOND1:\n    j .BB4 if $0 else .WHELSE3\n\n    .WHELSE3:\n    #return = $0\n    j .main_ret\n\n    .BB4:\n    #4 = 1\n    #5 = ($0, #4)\n    $0 = #5\n    #6 = ($1, $0)\n    $1 = #6\n    j .IFTHEN6 if $1 else .BB5\n\n    .BB5:\n    j .WHCOND1\n\n    .IFTHEN6:\n    #return = $0\n    j .main_ret\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 36,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     },
+     {
+      "ir": "$1",
+      "name": "b",
+      "line": 2,
+      "slot": 16
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 5,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       },
+       {
+        "op": "const",
+        "to": "$1",
+        "value": -4,
+        "slots": {
+         "$1": 16
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".WHCOND1",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".WHCOND1",
+      "instrs": [],
+      "next": {
+       "op": "branch",
+       "cond": "$0",
+       "then": ".BB4",
+       "else": ".WHELSE3",
+       "slots": {
+        "$0": 8
+       },
+       "line": 3
+      }
+     },
+     {
+      "name": ".WHELSE3",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$0",
+        "slots": {
+         "#return": 4,
+         "$0": 8
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".BB4",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#4",
+        "value": 1,
+        "slots": {
+         "#4": 28
+        },
+        "line": 4
+       },
+       {
+        "op": "bin",
+        "kind": "SUB",
+        "to": "#5",
+        "left": "$0",
+        "right": "#4",
+        "slots": {
+         "#5": 32,
+         "$0": 8,
+         "#4": 28
+        },
+        "line": 4
+       },
+       {
+        "op": "copy",
+        "to": "$0",
+        "from": "#5",
+        "slots": {
+         "$0": 8,
+         "#5": 32
+        },
+        "line": 4
+       },
+       {
+        "op": "bin",
+        "kind": "ADD",
+        "to": "#6",
+        "left": "$1",
+        "right": "$0",
+        "slots": {
+         "#6": 36,
+         "$1": 16,
+         "$0": 8
+        },
+        "line": 5
+       },
+       {
+        "op": "copy",
+        "to": "$1",
+        "from": "#6",
+        "slots": {
+         "$1": 16,
+         "#6": 36
+        },
+        "line": 5
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "$1",
+       "then": ".IFTHEN6",
+       "else": ".BB5",
+       "slots": {
+        "$1": 16
+       },
+       "line": 6
+      }
+     },
+     {
+      "name": ".BB5",
+      "instrs": [],
+      "next": {
+       "op": "jump",
+       "to": ".WHCOND1",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".IFTHEN6",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$0",
+        "slots": {
+         "#return": 4,
+         "$0": 8
+        },
+        "line": 6
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 6
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 48\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 5\n    mov DWORD PTR -16[rbp], -4\n    jmp .WHCOND1\n.WHCOND1:\n    cmp DWORD PTR -8[rbp], 0\n    je .WHELSE3\n    jmp .BB4\n.WHELSE3:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB4:\n    mov DWORD PTR -28[rbp], 1\n    mov eax, DWORD PTR -8[rbp]\n    sub eax, DWORD PTR -28[rbp]\n    mov DWORD PTR -32[rbp], eax\n    mov eax, DWORD PTR -32[rbp]\n    mov DWORD PTR -8[rbp], eax\n    mov eax, DWORD PTR -16[rbp]\n    add eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -36[rbp], eax\n    mov eax, DWORD PTR -36[rbp]\n    mov DWORD PTR -16[rbp], eax\n    cmp DWORD PTR -16[rbp], 0\n    je .BB5\n    jmp .IFTHEN6\n.BB5:\n    jmp .WHCOND1\n.IFTHEN6:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 9,
+      "to": 10
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 10,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "next",
+      "index": -1,
+      "from": 12,
+      "to": 15
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "block",
+      "index": -1,
+      "from": 11,
+      "to": 15
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 0,
+      "from": 16,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "next",
+      "index": -1,
+      "from": 18,
+      "to": 19
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "block",
+      "index": -1,
+      "from": 15,
+      "to": 19
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 20,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 21,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 24,
+      "to": 26
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 3,
+      "from": 26,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 4,
+      "from": 29,
+      "to": 31
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 31,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 19,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "next",
+      "index": -1,
+      "from": 35,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "block",
+      "index": -1,
+      "from": 34,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".IFTHEN6",
+      "kind": "instr",
+      "index": 0,
+      "from": 37,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".IFTHEN6",
+      "kind": "next",
+      "index": -1,
+      "from": 39,
+      "to": 40
+     },
+     {
+      "func": "main",
+      "block": ".IFTHEN6",
+      "kind": "block",
+      "index": -1,
+      "from": 36,
+      "to": 40
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 41,
+      "to": 45
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 40,
+      "to": 45
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -64\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -64\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 5\n    sw a5, -8(s0)\n    li a5, -4\n    sw a5, -16(s0)\n    j .WHCOND1\n.WHCOND1:\n    lw a5, -8(s0)\n    beq a5, zero, .WHELSE3\n    j .BB4\n.WHELSE3:\n    lw a5, -8(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB4:\n    li a5, 1\n    sw a5, -28(s0)\n    lw a5, -8(s0)\n    lw a6, -28(s0)\n    subw a5, a5, a6\n    sw a5, -32(s0)\n    lw a5, -32(s0)\n    sw a5, -8(s0)\n    lw a5, -16(s0)\n    lw a6, -8(s0)\n    addw a5, a5, a6\n    sw a5, -36(s0)\n    lw a5, -36(s0)\n    sw a5, -16(s0)\n    lw a5, -16(s0)\n    beq a5, zero, .BB5\n    j .IFTHEN6\n.BB5:\n    j .WHCOND1\n.IFTHEN6:\n    lw a5, -8(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 64\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 11,
+      "to": 13
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 13,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 14
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "next",
+      "index": -1,
+      "from": 15,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND1",
+      "kind": "block",
+      "index": -1,
+      "from": 14,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "instr",
+      "index": 0,
+      "from": 19,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "next",
+      "index": -1,
+      "from": 21,
+      "to": 22
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE3",
+      "kind": "block",
+      "index": -1,
+      "from": 18,
+      "to": 22
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 23,
+      "to": 25
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 25,
+      "to": 29
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 29,
+      "to": 31
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 3,
+      "from": 31,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 4,
+      "from": 35,
+      "to": 37
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 37,
+      "to": 40
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 22,
+      "to": 40
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "next",
+      "index": -1,
+      "from": 41,
+      "to": 42
+     },
+     {
+      "func": "main",
+      "block": ".BB5",
+      "kind": "block",
+      "index": -1,
+      "from": 40,
+      "to": 42
+     },
+     {
+      "func": "main",
+      "block": ".IFTHEN6",
+      "kind": "instr",
+      "index": 0,
+      "from": 43,
+      "to": 45
+     },
+     {
+      "func": "main",
+      "block": ".IFTHEN6",
+      "kind": "next",
+      "index": -1,
+      "from": 45,
+      "to": 46
+     },
+     {
+      "func": "main",
+      "block": ".IFTHEN6",
+      "kind": "block",
+      "index": -1,
+      "from": 42,
+      "to": 46
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 47,
+      "to": 52
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 46,
+      "to": 52
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 3,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 3,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 3,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "06_and_or",
+  "path": "tests/testfiles/if_else/06_and_or.c",
+  "source": "int main () {\n    int a = 1;\n    int b = 2, c = 3;\n    if (a == 1 && b == 2){\n        c += 1000;\n    }\n    if (a > b || a == 1){\n        c += 1000;\n    }\n    return c;\n}",
+  "dump": "main() {\n    .BB0:\n    $0 = 1\n    $1 = 2\n    $2 = 3\n    j .AND3\n\n    .IFELSE2:\n    #11 = ($0, $1)\n    j .OR12 if #11 else .OR11\n\n    .AND3:\n    #7 = 2\n    #8 = ($1, #7)\n    j .AND4 if #8 else .AND5\n\n    .AND4:\n    $6 = 1\n    j .ANDFOLLOW6\n\n    .AND5:\n    $6 = 0\n    j .ANDFOLLOW6\n\n    .ANDFOLLOW6:\n    j .BB7 if $6 else .IFELSE2\n\n    .BB7:\n    #9 = 1000\n    #10 = ($2, #9)\n    $2 = #10\n    j .IFELSE2\n\n    .IFELSE10:\n    #return = $2\n    j .main_ret\n\n    .OR11:\n    #13 = 1\n    #14 = ($0, #13)\n    j .OR12 if #14 else .OR13\n\n    .OR12:\n    $12 = 1\n    j .OR14\n\n    .OR13:\n    $12 = 0\n    j .OR14\n\n    .OR14:\n    j .BB15 if $12 else .IFELSE10\n\n    .BB15:\n    #15 = 1000\n    #16 = ($2, #15)\n    $2 = #16\n    j .IFELSE10\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 72,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "a",
+      "line": 2,
+      "slot": 8
+     },
+     {
+      "ir": "$1",
+      "name": "b",
+      "line": 3,
+      "slot": 16
+     },
+     {
+      "ir": "$2",
+      "name": "c",
+      "line": 3,
+      "slot": 24
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$0",
+        "value": 1,
+        "slots": {
+         "$0": 8
+        },
+        "line": 2
+       },
+       {
+        "op": "const",
+        "to": "$1",
+        "value": 2,
+        "slots": {
+         "$1": 16
+        },
+        "line": 3
+       },
+       {
+        "op": "const",
+        "to": "$2",
+        "value": 3,
+        "slots": {
+         "$2": 24
+        },
+        "line": 3
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".AND3",
+       "slots": {},
+       "line": 4
+      }
+     },
+     {
+      "name": ".IFELSE2",
+      "instrs": [
+       {
+        "op": "bin",
+        "kind": "GT",
+        "to": "#11",
+        "left": "$0",
+        "right": "$1",
+        "slots": {
+         "#11": 52,
+         "$0": 8,
+         "$1": 16
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "#11",
+       "then": ".OR12",
+       "else": ".OR11",
+       "slots": {
+        "#11": 52
+       },
+       "line": 7
+      }
+     },
+     {
+      "name": ".AND3",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#7",
+        "value": 2,
+        "slots": {
+         "#7": 44
+        },
+        "line": 4
+       },
+       {
+        "op": "bin",
+        "kind": "EQ",
+        "to": "#8",
+        "left": "$1",
+        "right": "#7",
+        "slots": {
+         "#8": 48,
+         "$1": 16,
+         "#7": 44
+        },
+        "line": 4
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "#8",
+       "then": ".AND4",
+       "else": ".AND5",
+       "slots": {
+        "#8": 48
+       },
+       "line": 4
+      }
+     },
+     {
+      "name": ".AND4",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$6",
+        "value": 1,
+        "slots": {
+         "$6": 40
+        },
+        "line": 4
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".ANDFOLLOW6",
+       "slots": {},
+       "line": 4
+      }
+     },
+     {
+      "name": ".AND5",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$6",
+        "value": 0,
+        "slots": {
+         "$6": 40
+        },
+        "line": 4
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".ANDFOLLOW6",
+       "slots": {},
+       "line": 4
+      }
+     },
+     {
+      "name": ".ANDFOLLOW6",
+      "instrs": [],
+      "next": {
+       "op": "branch",
+       "cond": "$6",
+       "then": ".BB7",
+       "else": ".IFELSE2",
+       "slots": {
+        "$6": 40
+       },
+       "line": 4
+      }
+     },
+     {
+      "name": ".BB7",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#9",
+        "value": 1000,
+        "slots": {
+         "#9": 68
+        },
+        "line": 5
+       },
+       {
+        "op": "bin",
+        "kind": "ADD",
+        "to": "#10",
+        "left": "$2",
+        "right": "#9",
+        "slots": {
+         "#10": 72,
+         "$2": 24,
+         "#9": 68
+        },
+        "line": 5
+       },
+       {
+        "op": "copy",
+        "to": "$2",
+        "from": "#10",
+        "slots": {
+         "$2": 24,
+         "#10": 72
+        },
+        "line": 5
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".IFELSE2",
+       "slots": {},
+       "line": 4
+      }
+     },
+     {
+      "name": ".IFELSE10",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$2",
+        "slots": {
+         "#return": 4,
+         "$2": 24
+        },
+        "line": 10
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 10
+      }
+     },
+     {
+      "name": ".OR11",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#13",
+        "value": 1,
+        "slots": {
+         "#13": 60
+        },
+        "line": 7
+       },
+       {
+        "op": "bin",
+        "kind": "EQ",
+        "to": "#14",
+        "left": "$0",
+        "right": "#13",
+        "slots": {
+         "#14": 64,
+         "$0": 8,
+         "#13": 60
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "#14",
+       "then": ".OR12",
+       "else": ".OR13",
+       "slots": {
+        "#14": 64
+       },
+       "line": 7
+      }
+     },
+     {
+      "name": ".OR12",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$12",
+        "value": 1,
+        "slots": {
+         "$12": 56
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".OR14",
+       "slots": {},
+       "line": 7
+      }
+     },
+     {
+      "name": ".OR13",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$12",
+        "value": 0,
+        "slots": {
+         "$12": 56
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".OR14",
+       "slots": {},
+       "line": 7
+      }
+     },
+     {
+      "name": ".OR14",
+      "instrs": [],
+      "next": {
+       "op": "branch",
+       "cond": "$12",
+       "then": ".BB15",
+       "else": ".IFELSE10",
+       "slots": {
+        "$12": 56
+       },
+       "line": 7
+      }
+     },
+     {
+      "name": ".BB15",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#15",
+        "value": 1000,
+        "slots": {
+         "#15": 68
+        },
+        "line": 8
+       },
+       {
+        "op": "bin",
+        "kind": "ADD",
+        "to": "#16",
+        "left": "$2",
+        "right": "#15",
+        "slots": {
+         "#16": 72,
+         "$2": 24,
+         "#15": 68
+        },
+        "line": 8
+       },
+       {
+        "op": "copy",
+        "to": "$2",
+        "from": "#16",
+        "slots": {
+         "$2": 24,
+         "#16": 72
+        },
+        "line": 8
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".IFELSE10",
+       "slots": {},
+       "line": 7
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 1
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 80\n    mov DWORD PTR -4[rbp], 0\n.BB0:\n    mov DWORD PTR -8[rbp], 1\n    mov DWORD PTR -16[rbp], 2\n    mov DWORD PTR -24[rbp], 3\n    jmp .AND3\n.IFELSE2:\n    mov eax, DWORD PTR -8[rbp]\n    cmp eax, DWORD PTR -16[rbp]\n    setg al\n    movzx   eax, al\n    mov DWORD PTR -52[rbp], eax\n    cmp DWORD PTR -52[rbp], 0\n    je .OR11\n    jmp .OR12\n.AND3:\n    mov DWORD PTR -44[rbp], 2\n    mov eax, DWORD PTR -16[rbp]\n    cmp eax, DWORD PTR -44[rbp]\n    sete al\n    movzx   eax, al\n    mov DWORD PTR -48[rbp], eax\n    cmp DWORD PTR -48[rbp], 0\n    je .AND5\n    jmp .AND4\n.AND4:\n    mov DWORD PTR -40[rbp], 1\n    jmp .ANDFOLLOW6\n.AND5:\n    mov DWORD PTR -40[rbp], 0\n    jmp .ANDFOLLOW6\n.ANDFOLLOW6:\n    cmp DWORD PTR -40[rbp], 0\n    je .IFELSE2\n    jmp .BB7\n.BB7:\n    mov DWORD PTR -68[rbp], 1000\n    mov eax, DWORD PTR -24[rbp]\n    add eax, DWORD PTR -68[rbp]\n    mov DWORD PTR -72[rbp], eax\n    mov eax, DWORD PTR -72[rbp]\n    mov DWORD PTR -24[rbp], eax\n    jmp .IFELSE2\n.IFELSE10:\n    mov eax, DWORD PTR -24[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.OR11:\n    mov DWORD PTR -60[rbp], 1\n    mov eax, DWORD PTR -8[rbp]\n    cmp eax, DWORD PTR -60[rbp]\n    sete al\n    movzx   eax, al\n    mov DWORD PTR -64[rbp], eax\n    cmp DWORD PTR -64[rbp], 0\n    je .OR13\n    jmp .OR12\n.OR12:\n    mov DWORD PTR -56[rbp], 1\n    jmp .OR14\n.OR13:\n    mov DWORD PTR -56[rbp], 0\n    jmp .OR14\n.OR14:\n    cmp DWORD PTR -56[rbp], 0\n    je .IFELSE10\n    jmp .BB15\n.BB15:\n    mov DWORD PTR -68[rbp], 1000\n    mov eax, DWORD PTR -24[rbp]\n    add eax, DWORD PTR -68[rbp]\n    mov DWORD PTR -72[rbp], eax\n    mov eax, DWORD PTR -72[rbp]\n    mov DWORD PTR -24[rbp], eax\n    jmp .IFELSE10\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 9,
+      "to": 10
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 2,
+      "from": 10,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 11,
+      "to": 12
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 12
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 0,
+      "from": 13,
+      "to": 18
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE2",
+      "kind": "next",
+      "index": -1,
+      "from": 18,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE2",
+      "kind": "block",
+      "index": -1,
+      "from": 12,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "instr",
+      "index": 0,
+      "from": 22,
+      "to": 23
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "instr",
+      "index": 1,
+      "from": 23,
+      "to": 28
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "next",
+      "index": -1,
+      "from": 28,
+      "to": 31
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "block",
+      "index": -1,
+      "from": 21,
+      "to": 31
+     },
+     {
+      "func": "main",
+      "block": ".AND4",
+      "kind": "instr",
+      "index": 0,
+      "from": 32,
+      "to": 33
+     },
+     {
+      "func": "main",
+      "block": ".AND4",
+      "kind": "next",
+      "index": -1,
+      "from": 33,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".AND4",
+      "kind": "block",
+      "index": -1,
+      "from": 31,
+      "to": 34
+     },
+     {
+      "func": "main",
+      "block": ".AND5",
+      "kind": "instr",
+      "index": 0,
+      "from": 35,
+      "to": 36
+     },
+     {
+      "func": "main",
+      "block": ".AND5",
+      "kind": "next",
+      "index": -1,
+      "from": 36,
+      "to": 37
+     },
+     {
+      "func": "main",
+      "block": ".AND5",
+      "kind": "block",
+      "index": -1,
+      "from": 34,
+      "to": 37
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW6",
+      "kind": "next",
+      "index": -1,
+      "from": 38,
+      "to": 41
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW6",
+      "kind": "block",
+      "index": -1,
+      "from": 37,
+      "to": 41
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "instr",
+      "index": 0,
+      "from": 42,
+      "to": 43
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "instr",
+      "index": 1,
+      "from": 43,
+      "to": 46
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "instr",
+      "index": 2,
+      "from": 46,
+      "to": 48
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "next",
+      "index": -1,
+      "from": 48,
+      "to": 49
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "block",
+      "index": -1,
+      "from": 41,
+      "to": 49
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE10",
+      "kind": "instr",
+      "index": 0,
+      "from": 50,
+      "to": 52
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE10",
+      "kind": "next",
+      "index": -1,
+      "from": 52,
+      "to": 53
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE10",
+      "kind": "block",
+      "index": -1,
+      "from": 49,
+      "to": 53
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "instr",
+      "index": 0,
+      "from": 54,
+      "to": 55
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "instr",
+      "index": 1,
+      "from": 55,
+      "to": 60
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "next",
+      "index": -1,
+      "from": 60,
+      "to": 63
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "block",
+      "index": -1,
+      "from": 53,
+      "to": 63
+     },
+     {
+      "func": "main",
+      "block": ".OR12",
+      "kind": "instr",
+      "index": 0,
+      "from": 64,
+      "to": 65
+     },
+     {
+      "func": "main",
+      "block": ".OR12",
+      "kind": "next",
+      "index": -1,
+      "from": 65,
+      "to": 66
+     },
+     {
+      "func": "main",
+      "block": ".OR12",
+      "kind": "block",
+      "index": -1,
+      "from": 63,
+      "to": 66
+     },
+     {
+      "func": "main",
+      "block": ".OR13",
+      "kind": "instr",
+      "index": 0,
+      "from": 67,
+      "to": 68
+     },
+     {
+      "func": "main",
+      "block": ".OR13",
+      "kind": "next",
+      "index": -1,
+      "from": 68,
+      "to": 69
+     },
+     {
+      "func": "main",
+      "block": ".OR13",
+      "kind": "block",
+      "index": -1,
+      "from": 66,
+      "to": 69
+     },
+     {
+      "func": "main",
+      "block": ".OR14",
+      "kind": "next",
+      "index": -1,
+      "from": 70,
+      "to": 73
+     },
+     {
+      "func": "main",
+      "block": ".OR14",
+      "kind": "block",
+      "index": -1,
+      "from": 69,
+      "to": 73
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 0,
+      "from": 74,
+      "to": 75
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 1,
+      "from": 75,
+      "to": 78
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 2,
+      "from": 78,
+      "to": 80
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "next",
+      "index": -1,
+      "from": 80,
+      "to": 81
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "block",
+      "index": -1,
+      "from": 73,
+      "to": 81
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 82,
+      "to": 86
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 81,
+      "to": 86
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl main\nmain:\n    addi sp, sp, -96\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -96\n    mv a5, zero\n    sw a5, -4(s0)\n.BB0:\n    li a5, 1\n    sw a5, -8(s0)\n    li a5, 2\n    sw a5, -16(s0)\n    li a5, 3\n    sw a5, -24(s0)\n    j .AND3\n.IFELSE2:\n    lw a5, -8(s0)\n    lw a6, -16(s0)\n    sgt a5, a5, a6\n    sw a5, -52(s0)\n    lw a5, -52(s0)\n    beq a5, zero, .OR11\n    j .OR12\n.AND3:\n    li a5, 2\n    sw a5, -44(s0)\n    lw a5, -16(s0)\n    lw a6, -44(s0)\n    sub a5, a5, a6\n    seqz a5, a5\n    sw a5, -48(s0)\n    lw a5, -48(s0)\n    beq a5, zero, .AND5\n    j .AND4\n.AND4:\n    li a5, 1\n    sw a5, -40(s0)\n    j .ANDFOLLOW6\n.AND5:\n    li a5, 0\n    sw a5, -40(s0)\n    j .ANDFOLLOW6\n.ANDFOLLOW6:\n    lw a5, -40(s0)\n    beq a5, zero, .IFELSE2\n    j .BB7\n.BB7:\n    li a5, 1000\n    sw a5, -68(s0)\n    lw a5, -24(s0)\n    lw a6, -68(s0)\n    addw a5, a5, a6\n    sw a5, -72(s0)\n    lw a5, -72(s0)\n    sw a5, -24(s0)\n    j .IFELSE2\n.IFELSE10:\n    lw a5, -24(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.OR11:\n    li a5, 1\n    sw a5, -60(s0)\n    lw a5, -8(s0)\n    lw a6, -60(s0)\n    sub a5, a5, a6\n    seqz a5, a5\n    sw a5, -64(s0)\n    lw a5, -64(s0)\n    beq a5, zero, .OR13\n    j .OR12\n.OR12:\n    li a5, 1\n    sw a5, -56(s0)\n    j .OR14\n.OR13:\n    li a5, 0\n    sw a5, -56(s0)\n    j .OR14\n.OR14:\n    lw a5, -56(s0)\n    beq a5, zero, .IFELSE10\n    j .BB15\n.BB15:\n    li a5, 1000\n    sw a5, -68(s0)\n    lw a5, -24(s0)\n    lw a6, -68(s0)\n    addw a5, a5, a6\n    sw a5, -72(s0)\n    lw a5, -72(s0)\n    sw a5, -24(s0)\n    j .IFELSE10\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 96\n    jr ra\n",
+    "spans": [
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 11,
+      "to": 13
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 2,
+      "from": 13,
+      "to": 15
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 15,
+      "to": 16
+     },
+     {
+      "func": "main",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 16
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 0,
+      "from": 17,
+      "to": 21
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE2",
+      "kind": "next",
+      "index": -1,
+      "from": 21,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE2",
+      "kind": "block",
+      "index": -1,
+      "from": 16,
+      "to": 24
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "instr",
+      "index": 0,
+      "from": 25,
+      "to": 27
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "instr",
+      "index": 1,
+      "from": 27,
+      "to": 32
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "next",
+      "index": -1,
+      "from": 32,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".AND3",
+      "kind": "block",
+      "index": -1,
+      "from": 24,
+      "to": 35
+     },
+     {
+      "func": "main",
+      "block": ".AND4",
+      "kind": "instr",
+      "index": 0,
+      "from": 36,
+      "to": 38
+     },
+     {
+      "func": "main",
+      "block": ".AND4",
+      "kind": "next",
+      "index": -1,
+      "from": 38,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".AND4",
+      "kind": "block",
+      "index": -1,
+      "from": 35,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": ".AND5",
+      "kind": "instr",
+      "index": 0,
+      "from": 40,
+      "to": 42
+     },
+     {
+      "func": "main",
+      "block": ".AND5",
+      "kind": "next",
+      "index": -1,
+      "from": 42,
+      "to": 43
+     },
+     {
+      "func": "main",
+      "block": ".AND5",
+      "kind": "block",
+      "index": -1,
+      "from": 39,
+      "to": 43
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW6",
+      "kind": "next",
+      "index": -1,
+      "from": 44,
+      "to": 47
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW6",
+      "kind": "block",
+      "index": -1,
+      "from": 43,
+      "to": 47
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "instr",
+      "index": 0,
+      "from": 48,
+      "to": 50
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "instr",
+      "index": 1,
+      "from": 50,
+      "to": 54
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "instr",
+      "index": 2,
+      "from": 54,
+      "to": 56
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "next",
+      "index": -1,
+      "from": 56,
+      "to": 57
+     },
+     {
+      "func": "main",
+      "block": ".BB7",
+      "kind": "block",
+      "index": -1,
+      "from": 47,
+      "to": 57
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE10",
+      "kind": "instr",
+      "index": 0,
+      "from": 58,
+      "to": 60
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE10",
+      "kind": "next",
+      "index": -1,
+      "from": 60,
+      "to": 61
+     },
+     {
+      "func": "main",
+      "block": ".IFELSE10",
+      "kind": "block",
+      "index": -1,
+      "from": 57,
+      "to": 61
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "instr",
+      "index": 0,
+      "from": 62,
+      "to": 64
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "instr",
+      "index": 1,
+      "from": 64,
+      "to": 69
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "next",
+      "index": -1,
+      "from": 69,
+      "to": 72
+     },
+     {
+      "func": "main",
+      "block": ".OR11",
+      "kind": "block",
+      "index": -1,
+      "from": 61,
+      "to": 72
+     },
+     {
+      "func": "main",
+      "block": ".OR12",
+      "kind": "instr",
+      "index": 0,
+      "from": 73,
+      "to": 75
+     },
+     {
+      "func": "main",
+      "block": ".OR12",
+      "kind": "next",
+      "index": -1,
+      "from": 75,
+      "to": 76
+     },
+     {
+      "func": "main",
+      "block": ".OR12",
+      "kind": "block",
+      "index": -1,
+      "from": 72,
+      "to": 76
+     },
+     {
+      "func": "main",
+      "block": ".OR13",
+      "kind": "instr",
+      "index": 0,
+      "from": 77,
+      "to": 79
+     },
+     {
+      "func": "main",
+      "block": ".OR13",
+      "kind": "next",
+      "index": -1,
+      "from": 79,
+      "to": 80
+     },
+     {
+      "func": "main",
+      "block": ".OR13",
+      "kind": "block",
+      "index": -1,
+      "from": 76,
+      "to": 80
+     },
+     {
+      "func": "main",
+      "block": ".OR14",
+      "kind": "next",
+      "index": -1,
+      "from": 81,
+      "to": 84
+     },
+     {
+      "func": "main",
+      "block": ".OR14",
+      "kind": "block",
+      "index": -1,
+      "from": 80,
+      "to": 84
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 0,
+      "from": 85,
+      "to": 87
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 1,
+      "from": 87,
+      "to": 91
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 2,
+      "from": 91,
+      "to": 93
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "next",
+      "index": -1,
+      "from": 93,
+      "to": 94
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "block",
+      "index": -1,
+      "from": 84,
+      "to": 94
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 95,
+      "to": 100
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 94,
+      "to": 100
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 211,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 211,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 211,
+    "stdout": ""
+   }
+  }
+ },
+ {
+  "id": "9_fact120",
+  "path": "tests/testfiles/functions/9_fact120.c",
+  "source": "int factorial(int n) {\n  if (n <= 1) return 1;\n  else return n * factorial(n - 1);\n}\n\nint main() {\n  int n = 4, result = factorial(n);\n\n  while(result > 2 && result < 120) {\n    result = factorial(++n);\n  }\n\n  switch (result) {\n    case 2:\n    case 120:\n      result = n;\n      break;\n    default:\n      result = n % 2;\n  }\n\n  return result;\n}\n",
+  "dump": "factorial($0, ) {\n    .BB0:\n    #1 = 1\n    #2 = ($0, #1)\n    j .IFTHEN1 if #2 else .IFELSE2\n\n    .IFTHEN1:\n    #return = 1\n    j .factorial_ret\n\n    .IFELSE2:\n    #5 = 1\n    #6 = ($0, #5)\n    #4 = factorial(#6, )\n    #7 = ($0, #4)\n    #return = #7\n    j .factorial_ret\n\n    .factorial_ret:\n    ret\n\n}\nmain() {\n    .BB4:\n    $1 = 4\n    #9 = factorial($1, )\n    $2 = #9\n    j .WHCOND5\n\n    .WHCOND5:\n    #10 = 2\n    #11 = ($2, #10)\n    j .AND8 if #11 else .AND10\n\n    .WHELSE7:\n    switch ($2) {\n        2 : .BB17\n        120 : .BB17\n        default : .BB14\n    }\n\n    .AND8:\n    #13 = 120\n    #14 = ($2, #13)\n    j .AND9 if #14 else .AND10\n\n    .AND9:\n    $12 = 1\n    j .ANDFOLLOW11\n\n    .AND10:\n    $12 = 0\n    j .ANDFOLLOW11\n\n    .ANDFOLLOW11:\n    j .BB12 if $12 else .WHELSE7\n\n    .BB12:\n    $1 = ($1)\n    #15 = factorial($1, )\n    $2 = #15\n    j .WHCOND5\n\n    .BB14:\n    #16 = 2\n    #17 = ($1, #16)\n    $2 = #17\n    j .BB15\n\n    .BB15:\n    #return = $2\n    j .main_ret\n\n    .BB17:\n    $2 = $1\n    j .BB15\n\n    .main_ret:\n    ret\n\n}\n",
+  "functions": [
+   {
+    "name": "factorial",
+    "args": [
+     "$0"
+    ],
+    "frameSize": 36,
+    "returnSlot": 8,
+    "vars": [
+     {
+      "ir": "$0",
+      "name": "n",
+      "line": 1,
+      "slot": 4
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB0",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#1",
+        "value": 1,
+        "slots": {
+         "#1": 12
+        },
+        "line": 2
+       },
+       {
+        "op": "bin",
+        "kind": "LTE",
+        "to": "#2",
+        "left": "$0",
+        "right": "#1",
+        "slots": {
+         "#2": 16,
+         "$0": 4,
+         "#1": 12
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "#2",
+       "then": ".IFTHEN1",
+       "else": ".IFELSE2",
+       "slots": {
+        "#2": 16
+       },
+       "line": 2
+      }
+     },
+     {
+      "name": ".IFTHEN1",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#return",
+        "value": 1,
+        "slots": {
+         "#return": 8
+        },
+        "line": 2
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".factorial_ret",
+       "slots": {},
+       "line": 2
+      }
+     },
+     {
+      "name": ".IFELSE2",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#5",
+        "value": 1,
+        "slots": {
+         "#5": 24
+        },
+        "line": 3
+       },
+       {
+        "op": "bin",
+        "kind": "SUB",
+        "to": "#6",
+        "left": "$0",
+        "right": "#5",
+        "slots": {
+         "#6": 28,
+         "$0": 4,
+         "#5": 24
+        },
+        "line": 3
+       },
+       {
+        "op": "call",
+        "func": "factorial",
+        "ret": "#4",
+        "args": [
+         "#6"
+        ],
+        "slots": {
+         "#6": 28,
+         "#4": 32
+        },
+        "line": 3
+       },
+       {
+        "op": "bin",
+        "kind": "MUL",
+        "to": "#7",
+        "left": "$0",
+        "right": "#4",
+        "slots": {
+         "#7": 36,
+         "$0": 4,
+         "#4": 32
+        },
+        "line": 3
+       },
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "#7",
+        "slots": {
+         "#return": 8,
+         "#7": 36
+        },
+        "line": 3
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".factorial_ret",
+       "slots": {},
+       "line": 3
+      }
+     },
+     {
+      "name": ".factorial_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 8
+       },
+       "line": 1
+      }
+     }
+    ]
+   },
+   {
+    "name": "main",
+    "args": [],
+    "frameSize": 52,
+    "returnSlot": 4,
+    "vars": [
+     {
+      "ir": "$1",
+      "name": "n",
+      "line": 7,
+      "slot": 8
+     },
+     {
+      "ir": "$2",
+      "name": "result",
+      "line": 7,
+      "slot": 16
+     }
+    ],
+    "blocks": [
+     {
+      "name": ".BB4",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$1",
+        "value": 4,
+        "slots": {
+         "$1": 8
+        },
+        "line": 7
+       },
+       {
+        "op": "call",
+        "func": "factorial",
+        "ret": "#9",
+        "args": [
+         "$1"
+        ],
+        "slots": {
+         "$1": 8,
+         "#9": 20
+        },
+        "line": 7
+       },
+       {
+        "op": "copy",
+        "to": "$2",
+        "from": "#9",
+        "slots": {
+         "$2": 16,
+         "#9": 20
+        },
+        "line": 7
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".WHCOND5",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".WHCOND5",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#10",
+        "value": 2,
+        "slots": {
+         "#10": 24
+        },
+        "line": 9
+       },
+       {
+        "op": "bin",
+        "kind": "GT",
+        "to": "#11",
+        "left": "$2",
+        "right": "#10",
+        "slots": {
+         "#11": 28,
+         "$2": 16,
+         "#10": 24
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "#11",
+       "then": ".AND8",
+       "else": ".AND10",
+       "slots": {
+        "#11": 28
+       },
+       "line": 9
+      }
+     },
+     {
+      "name": ".WHELSE7",
+      "instrs": [],
+      "next": {
+       "op": "switch",
+       "test": "$2",
+       "cases": [
+        {
+         "value": "2",
+         "to": ".BB17"
+        },
+        {
+         "value": "120",
+         "to": ".BB17"
+        }
+       ],
+       "default": ".BB14",
+       "slots": {
+        "$2": 16
+       },
+       "line": 13
+      }
+     },
+     {
+      "name": ".AND8",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#13",
+        "value": 120,
+        "slots": {
+         "#13": 36
+        },
+        "line": 9
+       },
+       {
+        "op": "bin",
+        "kind": "LT",
+        "to": "#14",
+        "left": "$2",
+        "right": "#13",
+        "slots": {
+         "#14": 40,
+         "$2": 16,
+         "#13": 36
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "branch",
+       "cond": "#14",
+       "then": ".AND9",
+       "else": ".AND10",
+       "slots": {
+        "#14": 40
+       },
+       "line": 9
+      }
+     },
+     {
+      "name": ".AND9",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$12",
+        "value": 1,
+        "slots": {
+         "$12": 32
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".ANDFOLLOW11",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".AND10",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "$12",
+        "value": 0,
+        "slots": {
+         "$12": 32
+        },
+        "line": 9
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".ANDFOLLOW11",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".ANDFOLLOW11",
+      "instrs": [],
+      "next": {
+       "op": "branch",
+       "cond": "$12",
+       "then": ".BB12",
+       "else": ".WHELSE7",
+       "slots": {
+        "$12": 32
+       },
+       "line": 9
+      }
+     },
+     {
+      "name": ".BB12",
+      "instrs": [
+       {
+        "op": "unary",
+        "kind": "PRE_INC",
+        "to": "$1",
+        "from": "$1",
+        "slots": {
+         "$1": 8
+        },
+        "line": 10
+       },
+       {
+        "op": "call",
+        "func": "factorial",
+        "ret": "#15",
+        "args": [
+         "$1"
+        ],
+        "slots": {
+         "$1": 8,
+         "#15": 52
+        },
+        "line": 10
+       },
+       {
+        "op": "copy",
+        "to": "$2",
+        "from": "#15",
+        "slots": {
+         "$2": 16,
+         "#15": 52
+        },
+        "line": 10
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".WHCOND5",
+       "slots": {},
+       "line": 9
+      }
+     },
+     {
+      "name": ".BB14",
+      "instrs": [
+       {
+        "op": "const",
+        "to": "#16",
+        "value": 2,
+        "slots": {
+         "#16": 44
+        },
+        "line": 19
+       },
+       {
+        "op": "bin",
+        "kind": "MOD",
+        "to": "#17",
+        "left": "$1",
+        "right": "#16",
+        "slots": {
+         "#17": 48,
+         "$1": 8,
+         "#16": 44
+        },
+        "line": 19
+       },
+       {
+        "op": "copy",
+        "to": "$2",
+        "from": "#17",
+        "slots": {
+         "$2": 16,
+         "#17": 48
+        },
+        "line": 19
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB15",
+       "slots": {},
+       "line": 13
+      }
+     },
+     {
+      "name": ".BB15",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "#return",
+        "from": "$2",
+        "slots": {
+         "#return": 4,
+         "$2": 16
+        },
+        "line": 22
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".main_ret",
+       "slots": {},
+       "line": 22
+      }
+     },
+     {
+      "name": ".BB17",
+      "instrs": [
+       {
+        "op": "copy",
+        "to": "$2",
+        "from": "$1",
+        "slots": {
+         "$2": 16,
+         "$1": 8
+        },
+        "line": 16
+       }
+      ],
+      "next": {
+       "op": "jump",
+       "to": ".BB15",
+       "slots": {},
+       "line": 17
+      }
+     },
+     {
+      "name": ".main_ret",
+      "instrs": [],
+      "next": {
+       "op": "ret",
+       "slots": {
+        "#return": 4
+       },
+       "line": 6
+      }
+     }
+    ]
+   }
+  ],
+  "asm": {
+   "x86": {
+    "text": ".intel_syntax noprefix\n.globl factorial\nfactorial:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 48\n    mov DWORD PTR -4[rbp], edi\n.BB0:\n    mov DWORD PTR -12[rbp], 1\n    mov eax, DWORD PTR -4[rbp]\n    cmp eax, DWORD PTR -12[rbp]\n    setle al\n    movzx   eax, al\n    mov DWORD PTR -16[rbp], eax\n    cmp DWORD PTR -16[rbp], 0\n    je .IFELSE2\n    jmp .IFTHEN1\n.IFTHEN1:\n    mov DWORD PTR -8[rbp], 1\n    jmp .factorial_ret\n.IFELSE2:\n    mov DWORD PTR -24[rbp], 1\n    mov eax, DWORD PTR -4[rbp]\n    sub eax, DWORD PTR -24[rbp]\n    mov DWORD PTR -28[rbp], eax\n    mov edi, DWORD PTR -28[rbp]\n    call factorial\n    mov DWORD PTR -32[rbp], eax\n    mov eax, DWORD PTR -4[rbp]\n    imul eax, DWORD PTR -32[rbp]\n    mov DWORD PTR -36[rbp], eax\n    mov eax, DWORD PTR -36[rbp]\n    mov DWORD PTR -8[rbp], eax\n    jmp .factorial_ret\n.factorial_ret:\n    mov eax, DWORD PTR -8[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n.globl main\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 64\n    mov DWORD PTR -4[rbp], 0\n.BB4:\n    mov DWORD PTR -8[rbp], 4\n    mov edi, DWORD PTR -8[rbp]\n    call factorial\n    mov DWORD PTR -20[rbp], eax\n    mov eax, DWORD PTR -20[rbp]\n    mov DWORD PTR -16[rbp], eax\n    jmp .WHCOND5\n.WHCOND5:\n    mov DWORD PTR -24[rbp], 2\n    mov eax, DWORD PTR -16[rbp]\n    cmp eax, DWORD PTR -24[rbp]\n    setg al\n    movzx   eax, al\n    mov DWORD PTR -28[rbp], eax\n    cmp DWORD PTR -28[rbp], 0\n    je .AND10\n    jmp .AND8\n.WHELSE7:\n    cmp DWORD PTR -16[rbp], 2\n    je .BB17\n    cmp DWORD PTR -16[rbp], 120\n    je .BB17\n    jmp .BB14\n.AND8:\n    mov DWORD PTR -36[rbp], 120\n    mov eax, DWORD PTR -16[rbp]\n    cmp eax, DWORD PTR -36[rbp]\n    setl al\n    movzx   eax, al\n    mov DWORD PTR -40[rbp], eax\n    cmp DWORD PTR -40[rbp], 0\n    je .AND10\n    jmp .AND9\n.AND9:\n    mov DWORD PTR -32[rbp], 1\n    jmp .ANDFOLLOW11\n.AND10:\n    mov DWORD PTR -32[rbp], 0\n    jmp .ANDFOLLOW11\n.ANDFOLLOW11:\n    cmp DWORD PTR -32[rbp], 0\n    je .WHELSE7\n    jmp .BB12\n.BB12:\n    inc DWORD PTR -8[rbp]\n    mov edi, DWORD PTR -8[rbp]\n    call factorial\n    mov DWORD PTR -52[rbp], eax\n    mov eax, DWORD PTR -52[rbp]\n    mov DWORD PTR -16[rbp], eax\n    jmp .WHCOND5\n.BB14:\n    mov DWORD PTR -44[rbp], 2\n    mov eax, DWORD PTR -8[rbp]\n    cdq\n    idiv DWORD PTR -44[rbp]\n    mov DWORD PTR -48[rbp], edx\n    mov eax, DWORD PTR -48[rbp]\n    mov DWORD PTR -16[rbp], eax\n    jmp .BB15\n.BB15:\n    mov eax, DWORD PTR -16[rbp]\n    mov DWORD PTR -4[rbp], eax\n    jmp .main_ret\n.BB17:\n    mov eax, DWORD PTR -8[rbp]\n    mov DWORD PTR -16[rbp], eax\n    jmp .BB15\n.main_ret:\n    mov eax, DWORD PTR -4[rbp]\n    mov rsp, rbp\n    pop rbp\n    ret\n",
+    "spans": [
+     {
+      "func": "factorial",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 1,
+      "to": 7
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 8,
+      "to": 9
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 9,
+      "to": 14
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 14,
+      "to": 17
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 7,
+      "to": 17
+     },
+     {
+      "func": "factorial",
+      "block": ".IFTHEN1",
+      "kind": "instr",
+      "index": 0,
+      "from": 18,
+      "to": 19
+     },
+     {
+      "func": "factorial",
+      "block": ".IFTHEN1",
+      "kind": "next",
+      "index": -1,
+      "from": 19,
+      "to": 20
+     },
+     {
+      "func": "factorial",
+      "block": ".IFTHEN1",
+      "kind": "block",
+      "index": -1,
+      "from": 17,
+      "to": 20
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 0,
+      "from": 21,
+      "to": 22
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 1,
+      "from": 22,
+      "to": 25
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 2,
+      "from": 25,
+      "to": 28
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 3,
+      "from": 28,
+      "to": 31
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 4,
+      "from": 31,
+      "to": 33
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "next",
+      "index": -1,
+      "from": 33,
+      "to": 34
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "block",
+      "index": -1,
+      "from": 20,
+      "to": 34
+     },
+     {
+      "func": "factorial",
+      "block": ".factorial_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 35,
+      "to": 39
+     },
+     {
+      "func": "factorial",
+      "block": ".factorial_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 34,
+      "to": 39
+     },
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 39,
+      "to": 45
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 46,
+      "to": 47
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 47,
+      "to": 50
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 50,
+      "to": 52
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 52,
+      "to": 53
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 45,
+      "to": 53
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "instr",
+      "index": 0,
+      "from": 54,
+      "to": 55
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "instr",
+      "index": 1,
+      "from": 55,
+      "to": 60
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "next",
+      "index": -1,
+      "from": 60,
+      "to": 63
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "block",
+      "index": -1,
+      "from": 53,
+      "to": 63
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE7",
+      "kind": "next",
+      "index": -1,
+      "from": 64,
+      "to": 69
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE7",
+      "kind": "block",
+      "index": -1,
+      "from": 63,
+      "to": 69
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "instr",
+      "index": 0,
+      "from": 70,
+      "to": 71
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "instr",
+      "index": 1,
+      "from": 71,
+      "to": 76
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "next",
+      "index": -1,
+      "from": 76,
+      "to": 79
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "block",
+      "index": -1,
+      "from": 69,
+      "to": 79
+     },
+     {
+      "func": "main",
+      "block": ".AND9",
+      "kind": "instr",
+      "index": 0,
+      "from": 80,
+      "to": 81
+     },
+     {
+      "func": "main",
+      "block": ".AND9",
+      "kind": "next",
+      "index": -1,
+      "from": 81,
+      "to": 82
+     },
+     {
+      "func": "main",
+      "block": ".AND9",
+      "kind": "block",
+      "index": -1,
+      "from": 79,
+      "to": 82
+     },
+     {
+      "func": "main",
+      "block": ".AND10",
+      "kind": "instr",
+      "index": 0,
+      "from": 83,
+      "to": 84
+     },
+     {
+      "func": "main",
+      "block": ".AND10",
+      "kind": "next",
+      "index": -1,
+      "from": 84,
+      "to": 85
+     },
+     {
+      "func": "main",
+      "block": ".AND10",
+      "kind": "block",
+      "index": -1,
+      "from": 82,
+      "to": 85
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW11",
+      "kind": "next",
+      "index": -1,
+      "from": 86,
+      "to": 89
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW11",
+      "kind": "block",
+      "index": -1,
+      "from": 85,
+      "to": 89
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "instr",
+      "index": 0,
+      "from": 90,
+      "to": 91
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "instr",
+      "index": 1,
+      "from": 91,
+      "to": 94
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "instr",
+      "index": 2,
+      "from": 94,
+      "to": 96
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "next",
+      "index": -1,
+      "from": 96,
+      "to": 97
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "block",
+      "index": -1,
+      "from": 89,
+      "to": 97
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "instr",
+      "index": 0,
+      "from": 98,
+      "to": 99
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "instr",
+      "index": 1,
+      "from": 99,
+      "to": 103
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "instr",
+      "index": 2,
+      "from": 103,
+      "to": 105
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "next",
+      "index": -1,
+      "from": 105,
+      "to": 106
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "block",
+      "index": -1,
+      "from": 97,
+      "to": 106
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 0,
+      "from": 107,
+      "to": 109
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "next",
+      "index": -1,
+      "from": 109,
+      "to": 110
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "block",
+      "index": -1,
+      "from": 106,
+      "to": 110
+     },
+     {
+      "func": "main",
+      "block": ".BB17",
+      "kind": "instr",
+      "index": 0,
+      "from": 111,
+      "to": 113
+     },
+     {
+      "func": "main",
+      "block": ".BB17",
+      "kind": "next",
+      "index": -1,
+      "from": 113,
+      "to": 114
+     },
+     {
+      "func": "main",
+      "block": ".BB17",
+      "kind": "block",
+      "index": -1,
+      "from": 110,
+      "to": 114
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 115,
+      "to": 119
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 114,
+      "to": 119
+     }
+    ]
+   },
+   "rv64": {
+    "text": ".globl factorial\nfactorial:\n    addi sp, sp, -64\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -64\n    mv t1, a0\n    sw t1, -4(s0)\n.BB0:\n    li a5, 1\n    sw a5, -12(s0)\n    lw a5, -4(s0)\n    lw a6, -12(s0)\n    sgt a5, a5, a6\n    seqz a5, a5\n    sw a5, -16(s0)\n    lw a5, -16(s0)\n    beq a5, zero, .IFELSE2\n    j .IFTHEN1\n.IFTHEN1:\n    li a5, 1\n    sw a5, -8(s0)\n    j .factorial_ret\n.IFELSE2:\n    li a5, 1\n    sw a5, -24(s0)\n    lw a5, -4(s0)\n    lw a6, -24(s0)\n    subw a5, a5, a6\n    sw a5, -28(s0)\n    lw a0, -28(s0)\n    call factorial\n    sw a0, -32(s0)\n    lw a5, -4(s0)\n    lw a6, -32(s0)\n    mulw a5, a5, a6\n    sw a5, -36(s0)\n    lw a5, -36(s0)\n    sw a5, -8(s0)\n    j .factorial_ret\n.factorial_ret:\n    lw a0, -8(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 64\n    jr ra\n.globl main\nmain:\n    addi sp, sp, -80\n    sd ra, 24(sp)\n    sd s0, 16(sp)\n    addi s0, sp, -80\n    mv a5, zero\n    sw a5, -4(s0)\n.BB4:\n    li a5, 4\n    sw a5, -8(s0)\n    lw a0, -8(s0)\n    call factorial\n    sw a0, -20(s0)\n    lw a5, -20(s0)\n    sw a5, -16(s0)\n    j .WHCOND5\n.WHCOND5:\n    li a5, 2\n    sw a5, -24(s0)\n    lw a5, -16(s0)\n    lw a6, -24(s0)\n    sgt a5, a5, a6\n    sw a5, -28(s0)\n    lw a5, -28(s0)\n    beq a5, zero, .AND10\n    j .AND8\n.WHELSE7:\n    li a6, 2\n    lw a5, -16(s0)\n    beq a5, a6, .BB17\n    li a6, 120\n    lw a5, -16(s0)\n    beq a5, a6, .BB17\n.AND8:\n    li a5, 120\n    sw a5, -36(s0)\n    lw a5, -16(s0)\n    lw a6, -36(s0)\n    slt a5, a5, a6\n    sw a5, -40(s0)\n    lw a5, -40(s0)\n    beq a5, zero, .AND10\n    j .AND9\n.AND9:\n    li a5, 1\n    sw a5, -32(s0)\n    j .ANDFOLLOW11\n.AND10:\n    li a5, 0\n    sw a5, -32(s0)\n    j .ANDFOLLOW11\n.ANDFOLLOW11:\n    lw a5, -32(s0)\n    beq a5, zero, .WHELSE7\n    j .BB12\n.BB12:\n    lw a5, -8(s0)\n    addi a5, a5, 1\n    sw a5, -8(s0)\n    sw a5, -8(s0)\n    lw a0, -8(s0)\n    call factorial\n    sw a0, -52(s0)\n    lw a5, -52(s0)\n    sw a5, -16(s0)\n    j .WHCOND5\n.BB14:\n    li a5, 2\n    sw a5, -44(s0)\n    lw a5, -8(s0)\n    lw a6, -44(s0)\n    rem a5, a5, a6\n    sw a5, -48(s0)\n    lw a5, -48(s0)\n    sw a5, -16(s0)\n    j .BB15\n.BB15:\n    lw a5, -16(s0)\n    sw a5, -4(s0)\n    j .main_ret\n.BB17:\n    lw a5, -8(s0)\n    sw a5, -16(s0)\n    j .BB15\n.main_ret:\n    lw a0, -4(s0)\n    ld ra, 24(sp)\n    ld s0, 16(sp)\n    addi sp, sp, 80\n    jr ra\n",
+    "spans": [
+     {
+      "func": "factorial",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 0,
+      "to": 8
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 0,
+      "from": 9,
+      "to": 11
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "instr",
+      "index": 1,
+      "from": 11,
+      "to": 16
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "next",
+      "index": -1,
+      "from": 16,
+      "to": 19
+     },
+     {
+      "func": "factorial",
+      "block": ".BB0",
+      "kind": "block",
+      "index": -1,
+      "from": 8,
+      "to": 19
+     },
+     {
+      "func": "factorial",
+      "block": ".IFTHEN1",
+      "kind": "instr",
+      "index": 0,
+      "from": 20,
+      "to": 22
+     },
+     {
+      "func": "factorial",
+      "block": ".IFTHEN1",
+      "kind": "next",
+      "index": -1,
+      "from": 22,
+      "to": 23
+     },
+     {
+      "func": "factorial",
+      "block": ".IFTHEN1",
+      "kind": "block",
+      "index": -1,
+      "from": 19,
+      "to": 23
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 0,
+      "from": 24,
+      "to": 26
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 1,
+      "from": 26,
+      "to": 30
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 2,
+      "from": 30,
+      "to": 33
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 3,
+      "from": 33,
+      "to": 37
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "instr",
+      "index": 4,
+      "from": 37,
+      "to": 39
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "next",
+      "index": -1,
+      "from": 39,
+      "to": 40
+     },
+     {
+      "func": "factorial",
+      "block": ".IFELSE2",
+      "kind": "block",
+      "index": -1,
+      "from": 23,
+      "to": 40
+     },
+     {
+      "func": "factorial",
+      "block": ".factorial_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 41,
+      "to": 46
+     },
+     {
+      "func": "factorial",
+      "block": ".factorial_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 40,
+      "to": 46
+     },
+     {
+      "func": "main",
+      "block": "",
+      "kind": "prologue",
+      "index": -1,
+      "from": 46,
+      "to": 54
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 0,
+      "from": 55,
+      "to": 57
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 1,
+      "from": 57,
+      "to": 60
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "instr",
+      "index": 2,
+      "from": 60,
+      "to": 62
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "next",
+      "index": -1,
+      "from": 62,
+      "to": 63
+     },
+     {
+      "func": "main",
+      "block": ".BB4",
+      "kind": "block",
+      "index": -1,
+      "from": 54,
+      "to": 63
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "instr",
+      "index": 0,
+      "from": 64,
+      "to": 66
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "instr",
+      "index": 1,
+      "from": 66,
+      "to": 70
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "next",
+      "index": -1,
+      "from": 70,
+      "to": 73
+     },
+     {
+      "func": "main",
+      "block": ".WHCOND5",
+      "kind": "block",
+      "index": -1,
+      "from": 63,
+      "to": 73
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE7",
+      "kind": "next",
+      "index": -1,
+      "from": 74,
+      "to": 80
+     },
+     {
+      "func": "main",
+      "block": ".WHELSE7",
+      "kind": "block",
+      "index": -1,
+      "from": 73,
+      "to": 80
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "instr",
+      "index": 0,
+      "from": 81,
+      "to": 83
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "instr",
+      "index": 1,
+      "from": 83,
+      "to": 87
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "next",
+      "index": -1,
+      "from": 87,
+      "to": 90
+     },
+     {
+      "func": "main",
+      "block": ".AND8",
+      "kind": "block",
+      "index": -1,
+      "from": 80,
+      "to": 90
+     },
+     {
+      "func": "main",
+      "block": ".AND9",
+      "kind": "instr",
+      "index": 0,
+      "from": 91,
+      "to": 93
+     },
+     {
+      "func": "main",
+      "block": ".AND9",
+      "kind": "next",
+      "index": -1,
+      "from": 93,
+      "to": 94
+     },
+     {
+      "func": "main",
+      "block": ".AND9",
+      "kind": "block",
+      "index": -1,
+      "from": 90,
+      "to": 94
+     },
+     {
+      "func": "main",
+      "block": ".AND10",
+      "kind": "instr",
+      "index": 0,
+      "from": 95,
+      "to": 97
+     },
+     {
+      "func": "main",
+      "block": ".AND10",
+      "kind": "next",
+      "index": -1,
+      "from": 97,
+      "to": 98
+     },
+     {
+      "func": "main",
+      "block": ".AND10",
+      "kind": "block",
+      "index": -1,
+      "from": 94,
+      "to": 98
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW11",
+      "kind": "next",
+      "index": -1,
+      "from": 99,
+      "to": 102
+     },
+     {
+      "func": "main",
+      "block": ".ANDFOLLOW11",
+      "kind": "block",
+      "index": -1,
+      "from": 98,
+      "to": 102
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "instr",
+      "index": 0,
+      "from": 103,
+      "to": 107
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "instr",
+      "index": 1,
+      "from": 107,
+      "to": 110
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "instr",
+      "index": 2,
+      "from": 110,
+      "to": 112
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "next",
+      "index": -1,
+      "from": 112,
+      "to": 113
+     },
+     {
+      "func": "main",
+      "block": ".BB12",
+      "kind": "block",
+      "index": -1,
+      "from": 102,
+      "to": 113
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "instr",
+      "index": 0,
+      "from": 114,
+      "to": 116
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "instr",
+      "index": 1,
+      "from": 116,
+      "to": 120
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "instr",
+      "index": 2,
+      "from": 120,
+      "to": 122
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "next",
+      "index": -1,
+      "from": 122,
+      "to": 123
+     },
+     {
+      "func": "main",
+      "block": ".BB14",
+      "kind": "block",
+      "index": -1,
+      "from": 113,
+      "to": 123
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "instr",
+      "index": 0,
+      "from": 124,
+      "to": 126
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "next",
+      "index": -1,
+      "from": 126,
+      "to": 127
+     },
+     {
+      "func": "main",
+      "block": ".BB15",
+      "kind": "block",
+      "index": -1,
+      "from": 123,
+      "to": 127
+     },
+     {
+      "func": "main",
+      "block": ".BB17",
+      "kind": "instr",
+      "index": 0,
+      "from": 128,
+      "to": 130
+     },
+     {
+      "func": "main",
+      "block": ".BB17",
+      "kind": "next",
+      "index": -1,
+      "from": 130,
+      "to": 131
+     },
+     {
+      "func": "main",
+      "block": ".BB17",
+      "kind": "block",
+      "index": -1,
+      "from": 127,
+      "to": 131
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "next",
+      "index": -1,
+      "from": 132,
+      "to": 137
+     },
+     {
+      "func": "main",
+      "block": ".main_ret",
+      "kind": "block",
+      "index": -1,
+      "from": 131,
+      "to": 137
+     }
+    ]
+   }
+  },
+  "runs": {
+   "gcc": {
+    "exit": 5,
+    "stdout": ""
+   },
+   "x86": {
+    "exit": 5,
+    "stdout": ""
+   },
+   "rv64": {
+    "exit": 5,
+    "stdout": ""
+   }
+  }
+ }
+]
