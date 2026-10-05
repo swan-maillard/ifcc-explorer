@@ -1,13 +1,12 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import programs from "../src/data/programs.json";
+import { programs } from "../src/programs";
 import { debugDump } from "../src/ir";
-import type { Program } from "../src/types";
 
 const raw = (id: string, ext: string) => readFileSync(new URL(`../data/raw/${id}${ext}`, import.meta.url), "utf8");
 
 describe("programs.json matches what the compiler emitted", () => {
-  for (const program of programs as Program[]) {
+  for (const program of programs) {
     describe(program.path, () => {
       it("has the test file's source", () => {
         expect(program.source).toBe(raw(program.id, ".c"));

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>IFCC explorer</title>
+    <meta name="description" content="Follow a C program through IFCC, a student compiler: its source, the control-flow graph of its IR, and the x86-64 or RISC-V assembly it emits, all from real compiler output." />
+    <meta name="theme-color" content="#0D161C" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>IFCC, a C compiler</h1>
+      <p class="lede">
+        A compiler for a subset of C that six of us wrote at INSA Lyon in 2024. It turns C into its own
+        intermediate representation, optimises it and writes x86-64 or RISC-V assembly. My part was the control
+        flow: switch and case, break and continue, and return inside loops.
+      </p>
+      <p class="links">
+        <a href="https://github.com/swan-maillard/INSA-4A-CompilerC">Code of the original project</a>
+        <a href="https://swan-maillard.github.io/#work">Swan Maillard</a>
+      </p>
+    </header>
+
+    <main>
+      <section class="explorer" aria-label="Compiler explorer">
+        <div class="toolbar">
+          <label class="field">
+            <span>Program</span>
+            <select id="program"></select>
+          </label>
+          <p class="path" id="path"></p>
+        </div>
+
+        <div class="workspace" id="workspace">
+          <section class="pane source-pane" aria-labelledby="source-title">
+            <header class="pane-head">
+              <h2 id="source-title">C source</h2>
+              <span class="tag">from the test suite</span>
+            </header>
+            <div class="code-scroll" id="source-scroll">
+              <ol class="code" role="listbox" tabindex="0" aria-label="C source. Arrow keys pick a line."></ol>
+            </div>
+          </section>
+
+          <section class="pane graph-pane" aria-labelledby="graph-title">
+            <header class="pane-head">
+              <h2 id="graph-title">IR control-flow graph</h2>
+              <div class="tabs" id="func-tabs" role="group" aria-label="Function"></div>
+            </header>
+            <p class="legend" id="legend"></p>
+            <div class="graph-scroll" id="graph-scroll" tabindex="0" aria-label="Graph area, scrolls if the graph is wide">
+              <svg role="img" aria-label="Control-flow graph"></svg>
+            </div>
+          </section>
+
+          <section class="pane asm-pane" aria-labelledby="asm-title">
+            <header class="pane-head">
+              <h2 id="asm-title">Assembly</h2>
+              <div class="tabs" role="group" aria-label="Backend">
+                <button type="button" class="toggle" data-backend="x86" aria-pressed="true">x86-64</button>
+                <button type="button" class="toggle" data-backend="rv64" aria-pressed="false">RISC-V</button>
+              </div>
+            </header>
+            <div class="code-scroll asm-scroll" id="asm-scroll">
+              <ol class="code" role="listbox" tabindex="0" aria-label="Assembly. Arrow keys pick a line."></ol>
+            </div>
+          </section>
+
+          <aside class="pane side-pane" aria-labelledby="side-title">
+            <h2 id="side-title" class="visually-hidden">What's going on</h2>
+            <p class="note" id="note"></p>
+            <p class="explain" id="explain" aria-live="polite"></p>
+
+            <div class="run">
+              <div class="run-head">
+                <h3>Run the IR</h3>
+                <span class="counter" id="counter"></span>
+              </div>
+              <div class="controls">
+                <button type="button" class="btn" id="reset">Reset</button>
+                <button type="button" class="btn" id="back">Back</button>
+                <button type="button" class="btn primary" id="step">Step</button>
+                <button type="button" class="btn" id="play">Run</button>
+              </div>
+              <div id="frames"></div>
+              <p class="result" id="result"></p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="about" aria-labelledby="about-title">
+        <h2 id="about-title">What you're looking at</h2>
+        <p>
+          A compiler doesn't go from C to assembly in one jump. IFCC first turns each function into basic blocks:
+          short runs of instructions that always execute together, top to bottom. Each block ends with a jump, a test
+          that picks one of two blocks, a switch or a return. Drawn as boxes and arrows, that's the control-flow graph
+          in the middle.
+        </p>
+        <p>
+          The IR (intermediate representation) uses $ names for the variables you declared and # names for temporary
+          values. You see it after the compiler's four optimisation passes: constants are worked out ahead of time,
+          temporaries nobody reads are dropped, empty blocks are skipped and blocks nobody can reach are removed.
+          That's why some lines of C leave nothing behind.
+        </p>
+        <p>
+          Each backend then writes every block under the same label, and every IR instruction as a few lines of
+          assembly that load from and store to the stack. Hover or select anything to see where it came from and what
+          it became. The links come from the compiler itself: a small exporter I added notes which C statement was
+          being compiled when each IR instruction was created.
+        </p>
+        <p>
+          Run mode steps through the IR with a small interpreter written in TypeScript, and each variable sits in the
+          same stack slot as in the real assembly. For every program here, its exit code matches the program built by
+          GCC and the ones IFCC built for both backends. The tests check that.
+        </p>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p>
+        Ported from <a href="https://github.com/swan-maillard/INSA-4A-CompilerC">INSA-4A-CompilerC</a> (compiler
+        project, 4th year at INSA Lyon, 2024). Built by Swan Maillard.
+      </p>
+    </footer>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

@@ -1,10 +1,9 @@
 import { describe, expect, it } from "vitest";
-import programs from "../src/data/programs.json";
+import { programs } from "../src/programs";
 import { run } from "../src/interp";
-import type { Program } from "../src/types";
 
 describe("IR interpreter", () => {
-  for (const program of programs as Program[]) {
+  for (const program of programs) {
     it(`${program.path} exits like the GCC build`, () => {
       const trace = run(program);
       expect(trace.exitCode).toBe(program.runs.gcc.exit);

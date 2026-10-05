@@ -15,7 +15,7 @@ export interface Step {
   /** The IR item about to run, or null once main has returned. */
   at: ItemRef | null;
   /** Call stack, innermost last, copied so each step keeps its own values. */
-  frames: { func: string; block: string; memory: Record<number, number> }[];
+  frames: { func: string; block: string; index: number; memory: Record<number, number> }[];
   /** What the previous item did, for the explanation panel. */
   event: Event | null;
 }
@@ -222,7 +222,7 @@ function snapshot(stack: Frame[], event: Event, done = false): Step {
   const top = stack[stack.length - 1];
   return {
     at: done ? null : { func: top.func.name, block: top.block, index: top.index },
-    frames: stack.map((f) => ({ func: f.func.name, block: f.block, memory: Object.fromEntries(f.memory) })),
+    frames: stack.map((f) => ({ func: f.func.name, block: f.block, index: f.index, memory: Object.fromEntries(f.memory) })),
     event,
   };
 }

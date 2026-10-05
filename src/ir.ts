@@ -42,10 +42,16 @@ export function successors(n: Next): { to: string; label: string }[] {
       { to: n.then, label: "true" },
       { to: n.else, label: "false" },
     ];
-    case "switch": return [
-      ...n.cases.map((c) => ({ to: c.to, label: `case ${c.value}` })),
-      { to: n.default, label: "default" },
-    ];
+    case "switch": {
+      // Cases that share a block share one arrow: "case 2, 120".
+      const byTarget = new Map<string, string[]>();
+      for (const c of n.cases) byTarget.set(c.to, [...(byTarget.get(c.to) ?? []), c.value]);
+      const arrows = [...byTarget].map(([to, values]) => ({ to, label: `case ${values.join(", ")}` }));
+      const shared = arrows.find((a) => a.to === n.default);
+      if (shared) shared.label += ", default";
+      else arrows.push({ to: n.default, label: "default" });
+      return arrows;
+    }
     case "ret": return [];
   }
 }
