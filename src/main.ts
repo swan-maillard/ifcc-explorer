@@ -7,10 +7,10 @@ import "./style.css";
 import { programs } from "./programs";
 import { describeFocus, describeStep, named, slotText } from "./explain";
 import { run, type Trace } from "./interp";
-import { asmForItem, highlight, lineOf, type Focus } from "./links";
+import { asmForItem, linksFor, lineOf, type Focus } from "./links";
 import { meta } from "./meta";
 import type { Backend, Func } from "./types";
-import { CodeView, escapeHtml, highlightAsm, highlightC } from "./views/code";
+import { CodeView, escapeHtml, colourAsm, colourC } from "./views/code";
 import { GraphView } from "./views/graph";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -48,7 +48,7 @@ function setPin(focus: Focus | null) {
   if (focus?.kind !== "asm") asm.clearActive();
   render();
   // Bring the linked parts into view, except in the view that was used to pick.
-  const h = highlight(program, backend, focus);
+  const h = linksFor(program, backend, focus);
   const firstAsm = Math.min(...h.asm);
   if (focus && focus.kind !== "asm" && Number.isFinite(firstAsm)) asm.reveal(firstAsm);
   const block = [...h.blocks][0]?.split("/")[1];
@@ -64,7 +64,7 @@ function loadProgram(id: string) {
   stop();
   $("path").textContent = program.path;
   $("note").textContent = meta[program.id]?.note ?? "";
-  source.setLines(program.source.replace(/\n$/, "").split("\n").map(highlightC), 1);
+  source.setLines(program.source.replace(/\n$/, "").split("\n").map(colourC), 1);
   renderTabs();
   loadAsm();
   render();
@@ -72,7 +72,7 @@ function loadProgram(id: string) {
 }
 
 function loadAsm() {
-  asm.setLines(program.asm[backend].text.replace(/\n$/, "").split("\n").map(highlightAsm), 1);
+  asm.setLines(program.asm[backend].text.replace(/\n$/, "").split("\n").map(colourAsm), 1);
   document.querySelectorAll<HTMLButtonElement>("[data-backend]").forEach((b) => {
     b.setAttribute("aria-pressed", String(b.dataset.backend === backend));
   });
@@ -119,7 +119,7 @@ function current() {
 
 function render() {
   const focus = hovered ?? pinned;
-  const h = highlight(program, backend, focus);
+  const h = linksFor(program, backend, focus);
   const at = current();
 
   const func = h.func ?? at?.func ?? shownFunc ?? "main";

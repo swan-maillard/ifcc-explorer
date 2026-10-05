@@ -9,7 +9,7 @@ export type Focus =
   | { kind: "item"; item: ItemRef }
   | { kind: "asm"; line: number };
 
-export interface Highlight {
+export interface Linked {
   lines: Set<number>;
   items: Set<string>;
   blocks: Set<string>;
@@ -70,8 +70,8 @@ export function functionLine(program: Program, func: string): number | null {
   return f ? f.blocks[f.blocks.length - 1].next.line : null;
 }
 
-export function highlight(program: Program, backend: Backend, focus: Focus | null): Highlight {
-  const h: Highlight = { lines: new Set(), items: new Set(), blocks: new Set(), asm: new Set(), func: null };
+export function linksFor(program: Program, backend: Backend, focus: Focus | null): Linked {
+  const h: Linked = { lines: new Set(), items: new Set(), blocks: new Set(), asm: new Set(), func: null };
   if (!focus) return h;
 
   const addItem = (item: ItemRef) => {
@@ -111,7 +111,7 @@ export function highlight(program: Program, backend: Backend, focus: Focus | nul
       if (span.kind === "instr" || span.kind === "next") {
         addItem({ func: span.func, block: span.block, index: span.kind === "instr" ? span.index : -1 });
       } else if (span.kind === "block") {
-        const whole = highlight(program, backend, { kind: "block", func: span.func, block: span.block });
+        const whole = linksFor(program, backend, { kind: "block", func: span.func, block: span.block });
         whole.asm.add(focus.line);
         return whole;
       } else {

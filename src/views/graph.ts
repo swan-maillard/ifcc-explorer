@@ -1,6 +1,6 @@
 import { formatInstr, formatNext, successors } from "../ir";
 import { layout, type Layout } from "../layout";
-import { blockKey, itemKey, type Focus, type Highlight } from "../links";
+import { blockKey, itemKey, type Focus, type Linked } from "../links";
 import type { Func, ItemRef } from "../types";
 import { escapeHtml } from "./code";
 
@@ -135,7 +135,7 @@ export class GraphView {
     this.svg.setAttribute("aria-label", `Control-flow graph of ${func.name}: ${func.blocks.length} blocks, ${edges.length} edges.`);
   }
 
-  mark(h: Highlight, current: ItemRef | null, taken: { from: string; to: string } | null) {
+  mark(h: Linked, current: ItemRef | null, taken: { from: string; to: string } | null) {
     for (const [key, g] of this.nodes) {
       g.classList.toggle("is-linked", h.blocks.has(key));
       g.classList.toggle("is-current", !!current && key === blockKey(current.func, current.block));

@@ -111,11 +111,11 @@ export function escapeHtml(s: string): string {
 
 const C_KEYWORDS = /\b(int|void|if|else|while|do|switch|case|default|break|continue|return)\b/g;
 
-export function highlightC(line: string): string {
+export function colourC(line: string): string {
   return escapeHtml(line).replace(C_KEYWORDS, '<span class="kw">$1</span>');
 }
 
-export function highlightAsm(line: string): string {
+export function colourAsm(line: string): string {
   const html = escapeHtml(line);
   if (/^\S.*:$/.test(line)) return `<span class="label">${html}</span>`;
   if (/^\s*\./.test(line)) return `<span class="dir">${html}</span>`;

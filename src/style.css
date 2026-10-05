@@ -1,6 +1,6 @@
 :root {
   --bg: #0d161c;
-  --elevated: #121e26;
+  --raised: #121e26;
   --card: #18262f;
   --card-2: #263741;
   --border: rgba(255, 255, 255, 0.08);
@@ -218,7 +218,7 @@ select {
 }
 
 .pane {
-  background: var(--elevated);
+  background: var(--raised);
   border: 1px solid var(--border);
   border-radius: var(--r-l);
   padding: 14px;
@@ -282,7 +282,7 @@ select {
 .btn:disabled {
   cursor: default;
   color: var(--dim);
-  background: var(--elevated);
+  background: var(--raised);
   border-color: var(--card-2);
 }
 

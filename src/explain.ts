@@ -2,7 +2,7 @@
 
 import { binSymbol, cName, formatInstr } from "./ir";
 import type { Event, Step, Trace } from "./interp";
-import { asmForBlock, asmForItem, findBlock, highlight, itemsOnLine, lineOf, spanAt, type Focus } from "./links";
+import { asmForBlock, asmForItem, findBlock, linksFor, itemsOnLine, lineOf, spanAt, type Focus } from "./links";
 import type { Backend, Func, ItemRef, Next, Program } from "./types";
 
 export const backendName: Record<Backend, string> = { x86: "x86-64", rv64: "RISC-V" };
@@ -90,7 +90,7 @@ export function describeFocus(program: Program, backend: Backend, focus: Focus):
         return `${text} is the label of block ${span.block}. The IR and the assembly use the same name, which is how jumps line up between them.`;
       }
       const item = { func: span.func, block: span.block, index: span.kind === "instr" ? span.index : -1 };
-      const h = highlight(program, backend, { kind: "item", item });
+      const h = linksFor(program, backend, { kind: "item", item });
       const line = [...h.lines][0];
       const from = line ? `, from line ${line} of the C` : "";
       return `${text} is part of ${itemText(program, item)} in ${span.block}${from}.${slotsSentence(program, backend, item, asmLine)}`;
