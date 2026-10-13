@@ -133,7 +133,7 @@ export function describeStep(program: Program, trace: Trace, index: number): str
 function describeEvent(program: Program, event: Event, before: Step, trace: Trace, step: Step): string {
   switch (event.kind) {
     case "start":
-      return `main starts at ${step.at!.block}. Nothing has run yet. Step through it to watch the values change.`;
+      return `main starts at ${step.at!.block}. Nothing has run yet. Press Step to watch the values change.`;
     case "write": {
       const f = funcOf(program, event.item.func);
       const to = named(f, event.to);
@@ -191,7 +191,7 @@ function describeEvent(program: Program, event: Event, before: Step, trace: Trac
       const code = event.value !== trace.exitCode
         ? `Exit codes only keep the low 8 bits, so the process exits with ${trace.exitCode}`
         : `The exit code is ${trace.exitCode}`;
-      const check = trace.exitCode === gcc ? `the same as the program built by GCC` : `but the program built by GCC exits with ${gcc}`;
+      const check = trace.exitCode === gcc ? `the same as with GCC` : `but with GCC it exits with ${gcc}`;
       return `main returns ${event.value}. ${code}, ${check}.`;
     }
   }

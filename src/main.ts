@@ -144,7 +144,7 @@ function withCode(text: string): string {
 
 function idleText(): string {
   if (step === 0) {
-    return "Hover or select a line of C, a block or a line of assembly to see what it turned into. Or press Step to run the IR one instruction at a time.";
+    return "Press Step to run the IR one instruction at a time. You can also hover or click a line of C, a block or a line of assembly to see what it turned into.";
   }
   return describeStep(program, trace, step);
 }
@@ -183,8 +183,8 @@ function renderRun() {
     .join("");
 
   const runs = program.runs;
-  const real = `GCC's build exits with ${runs.gcc.exit}. IFCC's own builds exit with ${runs.x86.exit} on x86-64 and ${runs.rv64.exit} on RISC-V.`;
-  const done = step === last ? ` This run of the IR ends with exit code ${trace.exitCode}.` : "";
+  const real = `GCC exits with ${runs.gcc.exit}. IFCC exits with ${runs.x86.exit} on x86-64 and ${runs.rv64.exit} on RISC-V.`;
+  const done = step === last ? ` Here the IR ends with ${trace.exitCode}.` : "";
   $("result").textContent = real + done;
 }
 

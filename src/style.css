@@ -1,21 +1,18 @@
 :root {
   --bg: #0d161c;
-  --raised: #121e26;
-  --card: #18262f;
-  --card-2: #263741;
-  --border: rgba(255, 255, 255, 0.08);
-  --control: #738390;
+  --panel: #101b22;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-soft: rgba(255, 255, 255, 0.06);
+  --control: #5f6f7c;
   --amber: #ea9a27;
   --amber-bright: #ffb44a;
-  --amber-soft: rgba(234, 154, 39, 0.14);
-  --amber-line: rgba(234, 154, 39, 0.32);
+  --amber-soft: rgba(234, 154, 39, 0.13);
+  --amber-mid: rgba(234, 154, 39, 0.3);
   --text: #ffffff;
   --muted: #a5b1bc;
-  --dim: #93a0ad;
+  --dim: #8796a3;
   --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --r-s: 6px;
-  --r-m: 10px;
-  --r-l: 18px;
+  --label: "Barlow Condensed", "Barlow", sans-serif;
   --gutter: 16px;
   color-scheme: dark;
 }
@@ -33,9 +30,15 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 400 16px/1.6 "Barlow", system-ui, sans-serif;
+  font: 400 15px/1.55 "Barlow", system-ui, sans-serif;
   padding: 0 max(var(--gutter), env(safe-area-inset-right)) env(safe-area-inset-bottom)
     max(var(--gutter), env(safe-area-inset-left));
+}
+
+@media (min-width: 820px) {
+  body {
+    --gutter: 28px;
+  }
 }
 
 h1,
@@ -47,15 +50,15 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(30px, 5vw, 44px);
+  font-size: 26px;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 h3 {
-  font: 500 17px/1.3 "Barlow", sans-serif;
+  font: 500 15px/1.3 "Barlow", sans-serif;
   margin: 0;
 }
 
@@ -77,7 +80,7 @@ a:hover {
 
 code {
   font-family: var(--mono);
-  font-size: 0.9em;
+  font-size: 0.92em;
 }
 
 .visually-hidden {
@@ -90,34 +93,26 @@ code {
 }
 
 .page-header,
-main,
-.page-footer {
-  max-width: 1440px;
+main {
+  max-width: 1480px;
   margin: 0 auto;
 }
 
+/* Header */
+
 .page-header {
-  padding: max(40px, env(safe-area-inset-top)) 0 28px;
+  padding: max(20px, env(safe-area-inset-top)) 0 14px;
 }
 
-.lede {
-  max-width: 70ch;
+.page-header p {
+  max-width: 88ch;
+  margin: 6px 0 0;
   color: var(--muted);
-  font-size: 17px;
-  margin: 14px 0 12px;
 }
 
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 24px;
-  margin: 0;
-}
-
-.links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
+.page-header a {
+  margin-left: 6px;
+  white-space: nowrap;
 }
 
 /* Toolbar */
@@ -125,14 +120,23 @@ main,
 .toolbar {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 8px 20px;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 6px 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
 }
 
 .field {
-  display: grid;
-  gap: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.field select {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 280px;
 }
 
 .field span,
@@ -140,45 +144,53 @@ main,
 .counter,
 .path,
 .edge-label,
+.note-label,
 caption,
 thead th {
-  font-family: "Barlow Condensed", "Barlow", sans-serif;
+  font-family: var(--label);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
 .field span {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 select {
-  min-height: 44px;
-  min-width: min(320px, 100%);
+  min-height: 36px;
   max-width: 100%;
-  padding: 0 40px 0 14px;
-  font: 500 16px "Barlow", sans-serif;
+  padding: 0 34px 0 10px;
+  font: 500 15px "Barlow", sans-serif;
   color: var(--text);
-  background: var(--card)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23EA9A27' stroke-width='2'/%3E%3C/svg%3E")
-    no-repeat right 14px center;
+  background: var(--panel)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23EA9A27' stroke-width='1.6'/%3E%3C/svg%3E")
+    no-repeat right 12px center;
   border: 1px solid var(--control);
-  border-radius: var(--r-m);
+  border-radius: 3px;
   appearance: none;
 }
 
+select:hover {
+  border-color: var(--amber);
+}
+
 .path {
-  margin: 0 0 10px;
+  margin: 0;
   color: var(--dim);
-  font-size: 15px;
+  font-size: 14px;
   overflow-wrap: anywhere;
 }
 
-/* Workspace */
+/* Workspace: flat panes split by hairlines */
 
 .workspace {
   display: grid;
-  gap: 16px;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas: "source" "graph" "side" "asm";
 }
@@ -203,13 +215,12 @@ select {
       "source graph"
       "side graph"
       "asm asm";
-    align-items: start;
   }
 }
 
 @media (min-width: 1200px) {
   .workspace {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.45fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.45fr) minmax(0, 0.95fr);
     grid-template-areas:
       "source graph asm"
       "side graph asm";
@@ -218,10 +229,8 @@ select {
 }
 
 .pane {
-  background: var(--raised);
-  border: 1px solid var(--border);
-  border-radius: var(--r-l);
-  padding: 14px;
+  background: var(--bg);
+  padding: 10px 12px 12px;
   min-width: 0;
 }
 
@@ -230,49 +239,64 @@ select {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px 12px;
-  margin-bottom: 10px;
-  min-height: 44px;
+  gap: 6px 12px;
+  margin-bottom: 8px;
+  min-height: 32px;
 }
 
 .tag {
   color: var(--dim);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .tabs {
   display: flex;
-  gap: 6px;
+  gap: 0;
 }
 
-.toggle,
-.btn {
-  min-height: 44px;
-  min-width: 44px;
-  padding: 0 14px;
-  font: 500 16px "Barlow", sans-serif;
-  color: var(--text);
-  background: var(--card);
-  border: 1px solid var(--control);
-  border-radius: var(--r-m);
+/* Segmented toggles: the selected one is underlined in amber */
+.toggle {
+  min-height: 32px;
+  padding: 0 10px;
+  font: 500 14px var(--label);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid var(--line);
   cursor: pointer;
 }
 
-.toggle:hover,
-.btn:hover:not(:disabled) {
-  border-color: var(--amber);
+.toggle:hover {
+  color: var(--text);
 }
 
 .toggle[aria-pressed="true"] {
-  background: var(--amber-soft);
-  border-color: var(--amber);
   color: var(--amber-bright);
+  border-bottom-color: var(--amber);
+}
+
+.btn {
+  min-height: 34px;
+  min-width: 44px;
+  padding: 0 14px;
+  font: 500 15px "Barlow", sans-serif;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--control);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--amber);
 }
 
 .btn.primary {
   background: var(--amber);
   border-color: var(--amber);
   color: var(--bg);
+  min-width: 72px;
 }
 
 .btn.primary:hover:not(:disabled) {
@@ -282,8 +306,16 @@ select {
 .btn:disabled {
   cursor: default;
   color: var(--dim);
-  background: var(--raised);
-  border-color: var(--card-2);
+  background: none;
+  border-color: var(--line);
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .toggle,
+  select {
+    min-height: 44px;
+  }
 }
 
 /* Code views */
@@ -291,8 +323,6 @@ select {
 .code-scroll {
   position: relative;
   overflow: auto;
-  background: var(--bg);
-  border-radius: var(--r-m);
 }
 
 .asm-scroll {
@@ -301,15 +331,15 @@ select {
 
 @media (min-width: 1200px) {
   .asm-scroll {
-    max-height: min(1040px, calc(100vh - 140px));
+    max-height: min(980px, calc(100vh - 150px));
   }
 }
 
 ol.code {
   list-style: none;
   margin: 0;
-  padding: 8px 0;
-  font: 14px/1.6 var(--mono);
+  padding: 2px 0;
+  font: 13px/1.6 var(--mono);
   min-width: max-content;
   width: 100%;
 }
@@ -320,10 +350,10 @@ ol.code:focus-visible {
 
 ol.code li {
   display: flex;
-  padding: 0 12px 0 0;
+  padding: 0 10px 0 0;
   cursor: default;
   white-space: pre;
-  border-left: 3px solid transparent;
+  border-left: 2px solid transparent;
 }
 
 ol.code .ln {
@@ -344,7 +374,7 @@ ol.code li.is-linked {
 }
 
 ol.code li.is-current {
-  background: rgba(234, 154, 39, 0.26);
+  background: var(--amber-mid);
   border-left-color: var(--amber-bright);
 }
 
@@ -369,21 +399,19 @@ ol.code:focus-visible li[aria-selected="true"] {
 /* Graph */
 
 .legend {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .graph-scroll {
   overflow: auto;
   max-height: 72vh;
-  background: var(--bg);
-  border-radius: var(--r-m);
 }
 
 @media (min-width: 1200px) {
   .graph-scroll {
-    max-height: min(1000px, calc(100vh - 180px));
+    max-height: min(940px, calc(100vh - 190px));
   }
 }
 
@@ -396,7 +424,7 @@ ol.code:focus-visible li[aria-selected="true"] {
 .edge {
   fill: none;
   stroke: var(--dim);
-  stroke-width: 1.5;
+  stroke-width: 1.3;
 }
 
 .edge.is-linked {
@@ -405,7 +433,7 @@ ol.code:focus-visible li[aria-selected="true"] {
 
 .edge.is-current {
   stroke: var(--amber-bright);
-  stroke-width: 2.5;
+  stroke-width: 2.2;
 }
 
 .arrowhead {
@@ -436,7 +464,7 @@ ol.code:focus-visible li[aria-selected="true"] {
 }
 
 .node .box {
-  fill: var(--card);
+  fill: var(--panel);
   stroke: var(--control);
   stroke-width: 1;
 }
@@ -446,13 +474,13 @@ ol.code:focus-visible li[aria-selected="true"] {
 }
 
 .node.is-linked .box {
-  fill: #31342e;
+  fill: #1f2420;
   stroke: var(--amber);
 }
 
 .node.is-current .box {
   stroke: var(--amber-bright);
-  stroke-width: 2.5;
+  stroke-width: 2;
 }
 
 .node:focus {
@@ -486,7 +514,7 @@ ol.code:focus-visible li[aria-selected="true"] {
 }
 
 .row.is-linked .row-bg {
-  fill: var(--amber-line);
+  fill: var(--amber-mid);
 }
 
 .row.is-current .row-bg {
@@ -501,29 +529,8 @@ ol.code:focus-visible li[aria-selected="true"] {
 
 .side-pane {
   display: grid;
-  gap: 14px;
+  gap: 10px;
   align-content: start;
-}
-
-.note {
-  margin: 0;
-  padding: 12px 14px;
-  background: var(--card);
-  border-radius: var(--r-m);
-  border-left: 3px solid var(--amber);
-}
-
-.explain {
-  margin: 0;
-  min-height: 4.8em;
-  font-size: 17px;
-}
-
-.run {
-  display: grid;
-  gap: 12px;
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
 }
 
 .run-head {
@@ -535,56 +542,67 @@ ol.code:focus-visible li[aria-selected="true"] {
 
 .counter {
   color: var(--muted);
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+}
+
+.explain {
+  margin: 0;
+  min-height: 4.65em;
+  font-size: 15px;
+}
+
+.explain code,
+.legend code {
+  padding: 0 3px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  overflow-wrap: anywhere;
 }
 
 #frames {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .frame {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
-  background: var(--card);
-  border-radius: var(--r-m);
-  overflow: hidden;
+  font-size: 14px;
 }
 
 caption {
   text-align: left;
   color: var(--muted);
-  font-size: 15px;
-  padding: 0 0 4px;
+  font-size: 14px;
+  padding: 0 0 2px;
 }
 
 .frame th,
 .frame td {
   text-align: left;
-  padding: 6px 10px;
-  border-top: 1px solid var(--border);
+  padding: 3px 8px 3px 0;
+  border-bottom: 1px solid var(--line-soft);
 }
 
 thead th {
   color: var(--dim);
-  font-size: 14px;
-  border-top: 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
 }
 
 tbody th {
-  font: 400 14px var(--mono);
+  font: 400 13px var(--mono);
 }
 
 .frame .slot {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--muted);
 }
 
@@ -592,6 +610,7 @@ tbody th {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
   text-align: right;
+  padding-right: 0;
 }
 
 .frame tr.is-changed {
@@ -610,35 +629,40 @@ tbody th {
 .result {
   margin: 0;
   color: var(--muted);
+  font-size: 14px;
 }
 
-/* About and footer */
+.note {
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.note-label {
+  display: block;
+  color: var(--amber);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* About */
 
 .about {
-  max-width: 70ch;
-  padding: 56px 0 24px;
+  max-width: 72ch;
+  padding: 28px 0 40px;
 }
 
 .about h2 {
-  font-size: 26px;
-  margin-bottom: 12px;
+  font-size: 19px;
+  margin-bottom: 8px;
 }
 
 .about p {
-  font-size: 17px;
-  line-height: 1.65;
+  margin: 0 0 10px;
   color: var(--muted);
-}
-
-.page-footer {
-  border-top: 1px solid var(--border);
-  padding: 20px 0 32px;
-  color: var(--muted);
-  font-size: 15px;
-}
-
-.page-footer p {
-  margin: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -646,12 +670,4 @@ tbody th {
     scroll-behavior: auto !important;
     transition: none !important;
   }
-}
-
-.explain code,
-.legend code {
-  padding: 1px 5px;
-  background: var(--card-2);
-  border-radius: 4px;
-  overflow-wrap: anywhere;
 }

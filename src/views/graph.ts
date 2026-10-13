@@ -94,7 +94,7 @@ export class GraphView {
         role: "button",
         "aria-label": `Block ${n.name}: ${lines(block).join(", ")}`,
       });
-      g.append(el("rect", { class: "box", width: n.width, height: n.height, rx: 6 }));
+      g.append(el("rect", { class: "box", width: n.width, height: n.height, rx: 3 }));
       const title = el("text", { x: PAD_X, y: 18, class: "block-name" });
       title.textContent = n.name;
       g.append(title);
